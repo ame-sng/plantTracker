@@ -6,6 +6,7 @@ const app = express();
 const mongoose = require("mongoose");
 const session = require("express-session");
 const cors = require("cors");
+const path = require('path');
 
 // =======================================
 //              CONFIGURATIONS
@@ -63,6 +64,10 @@ mongoose.connection.once("open", () => {
 const mockController = require("./controllers/controller");
 app.use("/v1/controller", mockController);
 
+
+// =======================================
+//              LISTENER
+// =======================================
 //* allow for pathing on deployment e.g. Heroku
 app.use(express.static(path.join(__dirname, "./client/build")));
 
@@ -70,9 +75,6 @@ app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build", "index.html"));
 });
 
-// =======================================
-//              LISTENER
-// =======================================
 app.listen(PORT, () => {
     console.log("Listening on the port", PORT);
   }); 
