@@ -61,9 +61,11 @@ mongoose.connection.once("open", () => {
 // =======================================
 //         CONTROLLERS/ROUTES
 // =======================================
-const mockController = require("./controllers/controller");
-app.use("/v1/controller", mockController);
+const plantsController = require("./controllers/plants-controller.js");
+app.use("/v1/plants", plantsController);
 
+const usersController = require("./controllers/users-controller.js");
+app.use("/v1/users", usersController);
 
 // =======================================
 //              LISTENER
