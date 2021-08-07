@@ -7,7 +7,7 @@ const plantSchema = new Schema({
   water_freq: {type: Number},
   fertilise_freq: {type: Number},
   progressTrack_freq: {type: Number},
-  sunlight: {type: String},
+  sunlight: {type: String, enum:["Full Sun", "Part Sun", "Part Shade", "Full Shade"]},
   growing_medium: {type: String},
   indoors: {type: String, enum: ["indoor", "outdoor"]},
   pot_size: {type: Number},
