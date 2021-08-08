@@ -8,6 +8,7 @@ const session = require("express-session");
 const cors = require("cors");
 const path = require('path');
 
+
 // =======================================
 //              CONFIGURATIONS
 // =======================================
@@ -32,6 +33,7 @@ app.use(express.static("public"))
 app.use(express.static("./client/build"));
 
 
+
 // =======================================
 //             MONGOOSE CONNECTION
 // =======================================
@@ -49,12 +51,6 @@ mongoose.connect(MONGODB_URI, {
 mongoose.connection.once("open", () => {
   console.log("connected to mongoose...");
 });
-
-//* =======================================
-//*         AUTHENTICATION
-//* =======================================
-
-
 
 
 
