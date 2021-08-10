@@ -4,8 +4,8 @@
         "node": true
     },
     "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "airbnb"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -17,5 +17,9 @@
         "react"
     ],
     "rules": {
+        "prefer-destructuring": "off",
+        "quotes": ["error", "double"],
+        "no-multiple-empty-lines": "off",
+        "dot-notation": "off"
     }
 }
