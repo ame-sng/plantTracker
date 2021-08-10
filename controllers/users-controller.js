@@ -1,29 +1,30 @@
 const express = require("express");
+
 const router = express.Router();
 const { StatusCodes } = require("http-status-codes");
 const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const User = require("../models/users");
 require("dotenv").config();
 
 //* ==========GETS ALL USERS=========== *//
-//localhost:4000/v1/users/
-router.get("/", (req, res)=>{
-  User.find({}, (err, foundUsers)=>{
-    if(err){
-      res.status(StatusCodes.BAD_REQUEST).json({error: err.message});
-    };
+// localhost:4000/v1/users/
+router.get("/", (req, res) => {
+  User.find({}, (err, foundUsers) => {
+    if (err) {
+      res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
+    }
     res.status(StatusCodes.OK).json(foundUsers);
-  })
-})
+  });
+});
 
-//* ==========GETS USER BY ID=========== *// 
-//localhost:4000/v1/users/:id
+//* ==========GETS USER BY ID=========== *//
+// localhost:4000/v1/users/:id
 router.get("/:id", (req, res) => {
   const id = req.params.id;
   User.findOne({ _id: id })
     .populate("plants")
-    .exec(function (err, Users) {
+    .exec((err, Users) => {
       console.log("users: ", Users);
       if (err) {
         res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
@@ -33,42 +34,41 @@ router.get("/:id", (req, res) => {
 });
 
 //* ==========CREATES A USER=========== *//
-router.post("/", (req, res)=>{
+router.post("/", (req, res) => {
   req.body.password = bcrypt.hashSync(
     req.body.password,
-    bcrypt.genSaltSync(10)
+    bcrypt.genSaltSync(10),
   );
-  User.create(req.body, (err, createdUser)=>{
-    if(err){
-      res.status(StatusCodes.BAD_REQUEST).json({error: err.message})
-    };
+  User.create(req.body, (err, createdUser) => {
+    if (err) {
+      res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
+    }
     res.status(StatusCodes.OK).send(createdUser);
   });
 });
 
 //* ==========LOGIN A USER=========== *//
-//localhost:4000/v1/users/login
-router.post("/login", async (req, res)=>{
+// localhost:4000/v1/users/login
+router.post("/login", async (req, res) => {
   const username = req.body.username;
-  const user = {name: username};
-  User.findOne({username: username}, (err, foundUser)=>{
-    if (!foundUser){
-      res.status(StatusCodes.UNAUTHORIZED).json({message: "Email/Password incorrect"})
-    } else if (err){
-      res.status(StatusCodes.BAD_REQUEST).json({error: err.message})
+  const user = { name: username };
+  User.findOne({ username: username }, (err, foundUser) => {
+    if (!foundUser) {
+      res.status(StatusCodes.UNAUTHORIZED).json({ message: "Email/Password incorrect" });
+    } else if (err) {
+      res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
     } else {
       console.log("user found!");
-      if (bcrypt.compareSync(req.body.password, foundUser.password)){
+      if (bcrypt.compareSync(req.body.password, foundUser.password)) {
         const token = jwt.sign(user, process.env.TOKEN_SECRET);
-        console.log({token})
-        res.status(StatusCodes.OK).json({token})
-      }
-      else {
-        res.status(StatusCodes.UNAUTHORIZED).json({message: "Email/Password incorrect"})
+        console.log({ token });
+        res.status(StatusCodes.OK).json({ token });
+      } else {
+        res.status(StatusCodes.UNAUTHORIZED).json({ message: "Email/Password incorrect" });
       }
     }
-  })
-})
+  });
+});
 
 
 
@@ -84,7 +84,7 @@ router.put("/:id", (req, res) => {
         res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
       }
       res.status(StatusCodes.OK).json(updatedUser);
-    }
+    },
   );
 });
 module.exports = router;
