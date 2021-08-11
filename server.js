@@ -5,7 +5,7 @@ const express = require("express");
 
 const app = express();
 const mongoose = require("mongoose");
-const session = require("express-session");
+// const session = require("express-session");
 const cors = require("cors");
 const path = require("path");
 
@@ -22,13 +22,13 @@ const PORT = process.env.PORT;
 // =======================================
 app.use(cors());
 
-app.use(
-  session({
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false,
-  }),
-);
+// app.use(
+//   session({
+//     secret: process.env.SECRET,
+//     resave: false,
+//     saveUninitialized: false,
+//   }),
+// );
 app.use(express.json()); // parse JSON back and forth
 app.use(express.static("public"));
 app.use(express.static("./client/build"));

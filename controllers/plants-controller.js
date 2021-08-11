@@ -7,7 +7,7 @@ const Plant = require("../models/plants");
 require("dotenv").config();
 
 
-//* ==========AUTHENTICATION=========== *//
+//* ==========AUTHENTICATION MIDDLEWARE=========== *//
 const authenticateToken = (req, res, next) => {
   const bearerHeader = req.headers["authorization"];
   const token = bearerHeader && bearerHeader.split(" ")[1];
@@ -22,6 +22,7 @@ const authenticateToken = (req, res, next) => {
     next();
   });
 };
+
 //* ==========GETS ALL PLANTS=========== *//
 // localhost:4000/v1/plants/
 router.get("/", authenticateToken, (req, res) => {
@@ -46,8 +47,8 @@ router.get("/:id", (req, res) => {
 });
 
 //* ==========CREATE A PLANT=========== *//
-
-router.post("/", authenticateToken, (req, res) => {
+//! ADD AUTHENTICATION
+router.post("/", (req, res) => {
   Plant.create(req.body, (err, createdPlant) => {
     if (err) {
       res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });

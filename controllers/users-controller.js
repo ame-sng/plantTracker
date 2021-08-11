@@ -49,9 +49,8 @@ router.post("/", (req, res) => {
 
 //* ==========LOGIN A USER=========== *//
 // localhost:4000/v1/users/login
-router.post("/login", async (req, res) => {
+router.post("/login", (req, res) => {
   const username = req.body.username;
-  const user = { name: username };
   User.findOne({ username: username }, (err, foundUser) => {
     if (!foundUser) {
       res.status(StatusCodes.UNAUTHORIZED).json({ message: "Email/Password incorrect" });
@@ -60,7 +59,8 @@ router.post("/login", async (req, res) => {
     } else {
       console.log("user found!");
       if (bcrypt.compareSync(req.body.password, foundUser.password)) {
-        const token = jwt.sign(user, process.env.TOKEN_SECRET);
+        console.log("bcrypt done")
+        const token = jwt.sign({userId: foundUser._id, username: foundUser.username}, process.env.TOKEN_SECRET);
         console.log({ token });
         res.status(StatusCodes.OK).json({ token });
       } else {
