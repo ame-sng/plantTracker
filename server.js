@@ -2,7 +2,7 @@
 //              DEPENDENCIES
 // =======================================
 const express = require("express");
-
+const {cloudinary} = require('./utils/cloudinary')
 const app = express();
 const mongoose = require("mongoose");
 // const session = require("express-session");
@@ -29,7 +29,8 @@ app.use(cors());
 //     saveUninitialized: false,
 //   }),
 // );
-app.use(express.json()); // parse JSON back and forth
+app.use(express.json({limit: "10mb"})); // parse JSON back and forth
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use(express.static("public"));
 app.use(express.static("./client/build"));
 
@@ -59,6 +60,21 @@ app.use("/v1/plants", plantsController);
 const usersController = require("./controllers/users-controller");
 
 app.use("/v1/users", usersController);
+
+//* CLOUDINARY TEST*//
+app.post("/api/upload", async (req, res)=> {
+  try {
+    const fileString = req.body.data;
+    const uploadResponse = await cloudinary.uploader.upload(fileString, {
+      upload_preset: 'plantTracker',
+  }); 
+    console.log(uploadResponse)
+    res.json({msg: "yayuploaded"})
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ err: 'Something went wrong' });
+  }
+})
 
 // =======================================
 //              LISTENER

@@ -3,7 +3,9 @@ const express = require("express");
 const router = express.Router();
 const { StatusCodes } = require("http-status-codes");
 const jwt = require("jsonwebtoken");
+const { cloudinary } = require("../utils/cloudinary");
 const Plant = require("../models/plants");
+
 require("dotenv").config();
 
 
@@ -25,7 +27,8 @@ const authenticateToken = (req, res, next) => {
 
 //* ==========GETS ALL PLANTS=========== *//
 // localhost:4000/v1/plants/
-router.get("/", authenticateToken, (req, res) => {
+//! ADD AUTHENTICATION?
+router.get("/", (req, res) => {
   Plant.find({}, (err, foundPlants) => {
     if (err) {
       res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
@@ -34,11 +37,11 @@ router.get("/", authenticateToken, (req, res) => {
   });
 });
 
-//* ==========GETS PLANT BY ID=========== *//
-// localhost:4000/v1/plants/:id
-router.get("/:id", (req, res) => {
-  const id = req.params.id;
-  Plant.findById(id, (err, foundOne) => {
+//* ==========GETS PLANT BY NAME=========== *//
+// localhost:4000/v1/plants/:name
+router.get("/:name", (req, res) => {
+  const name = req.params.name;
+  Plant.findOne({name: name}, (err, foundOne) => {
     if (err) {
       res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
     }
@@ -48,14 +51,54 @@ router.get("/:id", (req, res) => {
 
 //* ==========CREATE A PLANT=========== *//
 //! ADD AUTHENTICATION
-router.post("/", (req, res) => {
-  Plant.create(req.body, (err, createdPlant) => {
-    if (err) {
-      res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
-    }
-    res.status(StatusCodes.OK).send(createdPlant);
-  });
-});
+// router.post("/upload", (req, res) => {
+//   Plant.create(req.body, (err, createdPlant) => {
+//     if (err) {
+//       res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
+//     }
+//     res.status(StatusCodes.OK).send(createdPlant);
+//   });
+// });
+
+router.post("/upload", async (req, res)=> {
+  try{
+    const fileString = req.body.data;
+    console.log("fileString: ", fileString)
+    const uploadResponse = await cloudinary.uploader.upload(fileString, {
+      upload_preset: 'plantTracker',
+  }); 
+    console.log("uploadResponse: ", uploadResponse)
+    res.json({msg: "yay uploaded to cloudinary!"})
+    let plant = new Plant({
+      image_upload: uploadResponse.secure_url,
+      name: req.body.name,
+      species: req.body.species,
+      posted_by: req.body.user_id,
+      date_started: req.body.date_started,
+      water_freq: req.body.water_freq,
+      fertilise_freq: req.body.fertilise_freq,
+      progressTrack_freq: req.body.progressTrack_freq,
+      sunlight: req.body.sunlight,
+      growing_medium: req.body.growing_medium,
+      location: req.body.location,
+      pot_size: req.body.pot_size,
+      pot_drain: req.body.pot_drain,
+      method: req.body.method,
+      edible: req.body.edible,
+    })
+    await plant.save();
+    User.findByIdAndUpdate(
+      req.body.user_id,
+      { $push: { plants: plant._id } },
+      { new: true },
+      (err, foundUser) => res.json(post)
+    );
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ err: "Uh oh. Something went wrong" })
+  }
+})
+
 
 //* ==========UPDATE A PLANT=========== *//
 router.put("/:id", (req, res) => {

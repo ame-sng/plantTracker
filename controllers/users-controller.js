@@ -20,9 +20,9 @@ router.get("/", (req, res) => {
 
 //* ==========GETS USER BY ID=========== *//
 // localhost:4000/v1/users/:id
-router.get("/:id", (req, res) => {
-  const id = req.params.id;
-  User.findOne({ _id: id })
+router.get("/:username", (req, res) => {
+  const username = req.params.username;
+  User.findOne({ username: username })
     .populate("plants")
     .exec((err, Users) => {
       console.log("users: ", Users);
