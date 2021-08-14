@@ -51,16 +51,8 @@ router.get("/:name", (req, res) => {
 
 //* ==========CREATE A PLANT=========== *//
 //! ADD AUTHENTICATION
-// router.post("/upload", (req, res) => {
-//   Plant.create(req.body, (err, createdPlant) => {
-//     if (err) {
-//       res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
-//     }
-//     res.status(StatusCodes.OK).send(createdPlant);
-//   });
-// });
 
-router.post("/upload", async (req, res)=> {
+router.post("/upload", authenticateToken, async (req, res)=> {
   try{
     const fileString = req.body.data;
     console.log("fileString: ", fileString)

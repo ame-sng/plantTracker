@@ -61,20 +61,6 @@ const usersController = require("./controllers/users-controller");
 
 app.use("/v1/users", usersController);
 
-//* CLOUDINARY TEST*//
-app.post("/api/upload", async (req, res)=> {
-  try {
-    const fileString = req.body.data;
-    const uploadResponse = await cloudinary.uploader.upload(fileString, {
-      upload_preset: 'plantTracker',
-  }); 
-    console.log(uploadResponse)
-    res.json({msg: "yayuploaded"})
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({ err: 'Something went wrong' });
-  }
-})
 
 // =======================================
 //              LISTENER

@@ -4,6 +4,7 @@ const router = express.Router();
 const { StatusCodes } = require("http-status-codes");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const generateToken = require("../utils/generateToken")
 const User = require("../models/users");
 require("dotenv").config();
 
@@ -34,7 +35,12 @@ router.get("/:username", (req, res) => {
 });
 
 //* ==========CREATES A USER=========== *//
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
+  const {username} = req.body;
+  const userExists = await User.findOne({username});
+  if (userExists){
+    res.status(StatusCodes.BAD_REQUEST).json({ message: "User already exists" });
+  }
   req.body.password = bcrypt.hashSync(
     req.body.password,
     bcrypt.genSaltSync(10),
@@ -43,7 +49,11 @@ router.post("/", (req, res) => {
     if (err) {
       res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
     }
-    res.status(StatusCodes.OK).send(createdUser);
+    res.status(StatusCodes.OK).json({ 
+      _id: createdUser._id,
+      username: createdUser.username,
+      email: createdUser.email,
+      token: generateToken(createdUser._id) });
   });
 });
 
@@ -60,9 +70,12 @@ router.post("/login", (req, res) => {
       console.log("user found!");
       if (bcrypt.compareSync(req.body.password, foundUser.password)) {
         console.log("bcrypt done")
-        const token = jwt.sign({userId: foundUser._id, username: foundUser.username}, process.env.TOKEN_SECRET);
-        console.log({ token });
-        res.status(StatusCodes.OK).json({ token });
+        res.status(StatusCodes.OK).json({ 
+          _id: foundUser._id,
+          username: foundUser.username,
+          email: foundUser.email,
+          plants: foundUser.plants,
+          token: generateToken(foundUser._id) });
       } else {
         res.status(StatusCodes.UNAUTHORIZED).json({ message: "Email/Password incorrect" });
       }
