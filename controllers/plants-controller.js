@@ -5,9 +5,9 @@ const { StatusCodes } = require("http-status-codes");
 const jwt = require("jsonwebtoken");
 const { cloudinary } = require("../utils/cloudinary");
 const Plant = require("../models/plants");
+const User = require("../models/users");
 
 require("dotenv").config();
-
 
 //* ==========AUTHENTICATION MIDDLEWARE=========== *//
 const authenticateToken = (req, res, next) => {
@@ -18,7 +18,9 @@ const authenticateToken = (req, res, next) => {
   }
   jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
     if (err) {
-      return res.status(StatusCodes.FORBIDDEN).json({ message: "Unauthorised Access" });
+      return res
+        .status(StatusCodes.FORBIDDEN)
+        .json({ message: "Unauthorised Access" });
     }
     req.user = user;
     next();
@@ -41,7 +43,7 @@ router.get("/", (req, res) => {
 // localhost:4000/v1/plants/:name
 router.get("/:name", (req, res) => {
   const name = req.params.name;
-  Plant.findOne({name: name}, (err, foundOne) => {
+  Plant.findOne({ name: name }, (err, foundOne) => {
     if (err) {
       res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
     }
@@ -52,15 +54,15 @@ router.get("/:name", (req, res) => {
 //* ==========CREATE A PLANT=========== *//
 //! ADD AUTHENTICATION
 
-router.post("/upload", authenticateToken, async (req, res)=> {
-  try{
+router.post("/upload", authenticateToken, async (req, res) => {
+  try {
     const fileString = req.body.data;
-    console.log("fileString: ", fileString)
+    console.log("fileString: ", fileString);
     const uploadResponse = await cloudinary.uploader.upload(fileString, {
-      upload_preset: 'plantTracker',
-  }); 
-    console.log("uploadResponse: ", uploadResponse)
-    res.json({msg: "yay uploaded to cloudinary!"})
+      upload_preset: "plantTracker",
+    });
+    console.log("uploadResponse: ", uploadResponse);
+    res.json({ msg: "yay uploaded to cloudinary!" });
     let plant = new Plant({
       image_upload: uploadResponse.secure_url,
       name: req.body.name,
@@ -77,35 +79,35 @@ router.post("/upload", authenticateToken, async (req, res)=> {
       pot_drain: req.body.pot_drain,
       method: req.body.method,
       edible: req.body.edible,
-    })
+      posted_by: req.body.posted_by,
+    });
     await plant.save();
     User.findByIdAndUpdate(
-      req.body.user_id,
+      req.body.posted_by,
       { $push: { plants: plant._id } },
       { new: true },
-      (err, foundUser) => res.json(post)
+      (err, foundUser) => {
+        if (err) {
+          res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
+        }
+        res.status(StatusCodes.OK)
+      }
     );
   } catch (error) {
-    console.log(error)
-    res.status(500).json({ err: "Uh oh. Something went wrong" })
+    console.log(error);
+    res.status(500).json({ err: "Uh oh. Something went wrong" });
   }
-})
-
+});
 
 //* ==========UPDATE A PLANT=========== *//
 router.put("/:id", (req, res) => {
   const id = req.params.id;
-  Plant.findByIdAndUpdate(
-    id,
-    req.body,
-    { new: true },
-    (err, updatedPlant) => {
-      if (err) {
-        res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
-      }
-      res.status(StatusCodes.OK).send(updatedPlant);
-    },
-  );
+  Plant.findByIdAndUpdate(id, req.body, { new: true }, (err, updatedPlant) => {
+    if (err) {
+      res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
+    }
+    res.status(StatusCodes.OK).send(updatedPlant);
+  });
 });
 
 //* ==========DELETE A PLANT=========== *//
