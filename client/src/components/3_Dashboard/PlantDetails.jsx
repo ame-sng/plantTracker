@@ -3,23 +3,18 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { Carousel, Image, Button, Row, Col, Typography } from "antd";
+import { Image, Button, Row, Col, Typography } from "antd";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
-import moment from "moment";
 import Environment from "./PlantDetailsComponents/3_Environment";
 import CareCountdown from "./PlantDetailsComponents/2_CareCountdown";
 import Edible from "./PlantDetailsComponents/4_Edible";
 import Entries from "./PlantDetailsComponents/Entries";
 import NameSpeciesDate from "./PlantDetailsComponents/1_NameSpeciesDate";
 
-const { Title, Text, Paragraph } = Typography;
+const { Title, Text } = Typography;
 
 const PlantDetails = () => {
-
-  const [editedForm, setEditedForm] = useState({
-    name: "",
-  
-  })
+  const [formChanged, setFormChanged] = useState(false)
 
   //*======Get User Info from Local Storage============
   const getUserInfo = () => {
@@ -30,7 +25,7 @@ const PlantDetails = () => {
   //*====================================================
 
   const { name } = useParams();
-  const { data, isLoading, error } = useQuery(["plant"], () =>
+  const { data, isLoading, error } = useQuery(["plant", name, formChanged], () =>
     axios(`/v1/plants/${name}`)
   );
 
@@ -103,7 +98,7 @@ const PlantDetails = () => {
           
            
 
-          <NameSpeciesDate userStorage={userStorage} plant={plant} />
+          <NameSpeciesDate userStorage={userStorage} plant={plant} formChanged={formChanged} setFormChanged={setFormChanged}/>
 
           <CareCountdown plant={plant} />
 

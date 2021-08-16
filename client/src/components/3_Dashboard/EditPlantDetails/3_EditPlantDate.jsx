@@ -1,17 +1,19 @@
-import React from 'react';
-import { Modal, Input, Form } from "antd";
+import React from 'react'
+import { Modal, Input, Form, DatePicker } from "antd";
+import moment from 'moment';
 
-const EditPlantSpecies = ({ userStorage, plant, speciesVisible, setSpeciesVisible, formChanged, setFormChanged }) => {
+const EditPlantDate = ({ userStorage, plant, dateStartVisible, setDateStartVisible, formChanged, setFormChanged }) => {
   const [form] = Form.useForm();
 
   const handleSubmit = async (fieldsValues) => {
     const formData = form.getFieldsValue(true);
-    console.log("formData: ", formData.species)
+    console.log("formData: ", formData)
+    const newDate = formData["date_started"].format("YYYY-MM-DD")
     try {
       await fetch(`/v1/plants/${plant._id}`, {
         method: "PUT",
         body: JSON.stringify({
-          species: formData.species
+          date_started: newDate
         }),
         headers: {
           "Content-Type": "application/json",
@@ -19,7 +21,7 @@ const EditPlantSpecies = ({ userStorage, plant, speciesVisible, setSpeciesVisibl
         },
       });
       form.resetFields();
-      setSpeciesVisible(false);
+      setDateStartVisible(false);
       setFormChanged(!formChanged)
     } catch (error) {
       console.log(error)
@@ -29,11 +31,11 @@ const EditPlantSpecies = ({ userStorage, plant, speciesVisible, setSpeciesVisibl
   return (
     <div>
        <Modal
-      visible={speciesVisible}
-      title="Edit Species"
+      visible={dateStartVisible}
+      title="Edit Date Started"
       centered
       onCancel={() => {
-        setSpeciesVisible(false);
+        setDateStartVisible(false);
       }}
       okText="Submit"
       onOk={handleSubmit}
@@ -46,8 +48,8 @@ const EditPlantSpecies = ({ userStorage, plant, speciesVisible, setSpeciesVisibl
           modifier: "public",
         }}
       >
-        <Form.Item name="species">
-          <Input placeholder={plant.species} />
+        <Form.Item name="date_started">
+        <DatePicker placeholder={moment(plant.date_started).format("YYYY-MM-DD")} style={{width: "140px"}} />
         </Form.Item>
       </Form>
     </Modal>
@@ -55,4 +57,4 @@ const EditPlantSpecies = ({ userStorage, plant, speciesVisible, setSpeciesVisibl
   )
 }
 
-export default EditPlantSpecies
+export default EditPlantDate

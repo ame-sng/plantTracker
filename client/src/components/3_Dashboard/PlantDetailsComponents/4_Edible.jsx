@@ -2,7 +2,7 @@ import React from 'react'
 import { Typography } from 'antd';
 import moment from 'moment';
 
-const {Title, Text, Paragraph} = Typography
+const {Title} = Typography
 
 const Edible = ({plant}) => {
 

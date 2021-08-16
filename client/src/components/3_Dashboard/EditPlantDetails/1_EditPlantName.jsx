@@ -48,7 +48,7 @@ const EditPlantName = ({ userStorage, plant, nameVisible, setNameVisible }) => {
         }}
       >
         <Form.Item name="name">
-          <Input placeholder="New Name" />
+          <Input placeholder={plant.name} />
         </Form.Item>
       </Form>
     </Modal>

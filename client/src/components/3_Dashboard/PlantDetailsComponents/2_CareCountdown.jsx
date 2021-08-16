@@ -3,7 +3,7 @@ import { Statistic, Row, Col, Typography, Button } from "antd";
 import moment from "moment";
 
 const { Countdown } = Statistic;
-const {Title, Text, Paragraph} = Typography
+const {Title} = Typography
 
 const CareCountdown = ({ plant }) => {
   //! RELOOK AT THE FUNCTIONALITY - USER EXPERIENCE
