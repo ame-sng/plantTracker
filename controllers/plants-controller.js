@@ -100,7 +100,7 @@ router.post("/upload", authenticateToken, async (req, res) => {
 });
 
 //* ==========UPDATE A PLANT=========== *//
-router.put("/:id", (req, res) => {
+router.put("/:id", authenticateToken, (req, res) => {
   const id = req.params.id;
   Plant.findByIdAndUpdate(id, req.body, { new: true }, (err, updatedPlant) => {
     if (err) {

@@ -6,21 +6,20 @@ import { Link } from "react-router-dom";
 import { Carousel, Image, Button, Row, Col, Typography } from "antd";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import moment from "moment";
-import Environment from "./PlantCareComponents/3_Environment";
-import CareCountdown from "./PlantCareComponents/2_CareCountdown";
-import Edible from "./PlantCareComponents/4_Edible";
-import Entries from "./PlantCareComponents/Entries";
-import NameSpeciesDate from "./PlantCareComponents/1_NameSpeciesDate";
+import Environment from "./PlantDetailsComponents/3_Environment";
+import CareCountdown from "./PlantDetailsComponents/2_CareCountdown";
+import Edible from "./PlantDetailsComponents/4_Edible";
+import Entries from "./PlantDetailsComponents/Entries";
+import NameSpeciesDate from "./PlantDetailsComponents/1_NameSpeciesDate";
 
 const { Title, Text, Paragraph } = Typography;
 
 const PlantDetails = () => {
-  //* =========FOR EDIT FORM================
-  const [value, setValue] = useState({
+
+  const [editedForm, setEditedForm] = useState({
     name: "",
-    species: "",
-  });
-  //*========================================
+  
+  })
 
   //*======Get User Info from Local Storage============
   const getUserInfo = () => {
@@ -31,7 +30,7 @@ const PlantDetails = () => {
   //*====================================================
 
   const { name } = useParams();
-  const { data, isLoading, error } = useQuery(["plant", name], () =>
+  const { data, isLoading, error } = useQuery(["plant"], () =>
     axios(`/v1/plants/${name}`)
   );
 
@@ -104,13 +103,13 @@ const PlantDetails = () => {
           
            
 
-          <NameSpeciesDate plant={plant} value={value} setValue={setValue} />
+          <NameSpeciesDate userStorage={userStorage} plant={plant} />
 
-          <CareCountdown plant={plant} value={value} setValue={setValue} />
+          <CareCountdown plant={plant} />
 
-          <Environment plant={plant} value={value} setValue={setValue} />
+          <Environment plant={plant}/>
 
-          <Edible plant={plant} value={value} setValue={setValue} />
+          <Edible plant={plant} />
         </Col>
       </Row>
     </div>
