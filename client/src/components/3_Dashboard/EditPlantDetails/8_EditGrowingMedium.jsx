@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react'
 import { Modal, Input, Form } from "antd";
 
-const EditPlantSpecies = ({
+const EditGrowingMedium = ({
   userStorage,
   plant,
-  speciesVisible,
-  setSpeciesVisible,
+  growVisible,
+  setGrowVisible,
   formChanged,
   setFormChanged,
 }) => {
@@ -13,12 +13,12 @@ const EditPlantSpecies = ({
 
   const handleSubmit = async (fieldsValues) => {
     const formData = form.getFieldsValue(true);
-    console.log("formData: ", formData.species);
+    console.log("formData: ", formData.growing_medium);
     try {
       await fetch(`/v1/plants/${plant._id}`, {
         method: "PUT",
         body: JSON.stringify({
-          species: formData.species,
+          growing_medium: formData.growing_medium,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -26,7 +26,7 @@ const EditPlantSpecies = ({
         },
       });
       form.resetFields();
-      setSpeciesVisible(false);
+      setGrowVisible(false);
       setFormChanged(!formChanged);
     } catch (error) {
       console.log(error);
@@ -36,11 +36,11 @@ const EditPlantSpecies = ({
   return (
     <div>
       <Modal
-        visible={speciesVisible}
-        title="Edit Species"
+        visible={growVisible}
+        title="Edit Growing Medium"
         centered
         onCancel={() => {
-          setSpeciesVisible(false);
+          setGrowVisible(false);
         }}
         okText="Submit"
         onOk={handleSubmit}
@@ -53,13 +53,13 @@ const EditPlantSpecies = ({
             modifier: "public",
           }}
         >
-          <Form.Item name="species">
-            <Input placeholder={plant.species} />
+          <Form.Item name="growing_medium">
+            <Input placeholder={plant.growing_medium} />
           </Form.Item>
         </Form>
       </Modal>
     </div>
   );
-};
+}
 
-export default EditPlantSpecies;
+export default EditGrowingMedium

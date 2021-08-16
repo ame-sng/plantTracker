@@ -1,11 +1,11 @@
-import React from "react";
-import { Modal, Input, Form } from "antd";
+import React from 'react'
+import { Modal, Input, Form, Slider } from "antd";
 
-const EditPlantSpecies = ({
+const EditPotSize = ({
   userStorage,
   plant,
-  speciesVisible,
-  setSpeciesVisible,
+  sizeVisible,
+  setSizeVisible,
   formChanged,
   setFormChanged,
 }) => {
@@ -13,12 +13,12 @@ const EditPlantSpecies = ({
 
   const handleSubmit = async (fieldsValues) => {
     const formData = form.getFieldsValue(true);
-    console.log("formData: ", formData.species);
+    console.log("formData: ", formData.pot_size);
     try {
       await fetch(`/v1/plants/${plant._id}`, {
         method: "PUT",
         body: JSON.stringify({
-          species: formData.species,
+          pot_size: formData.pot_size,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -26,7 +26,7 @@ const EditPlantSpecies = ({
         },
       });
       form.resetFields();
-      setSpeciesVisible(false);
+      setSizeVisible(false);
       setFormChanged(!formChanged);
     } catch (error) {
       console.log(error);
@@ -36,11 +36,11 @@ const EditPlantSpecies = ({
   return (
     <div>
       <Modal
-        visible={speciesVisible}
-        title="Edit Species"
+        visible={sizeVisible}
+        title="Edit Pot Size (inches)"
         centered
         onCancel={() => {
-          setSpeciesVisible(false);
+          setSizeVisible(false);
         }}
         okText="Submit"
         onOk={handleSubmit}
@@ -53,13 +53,22 @@ const EditPlantSpecies = ({
             modifier: "public",
           }}
         >
-          <Form.Item name="species">
-            <Input placeholder={plant.species} />
+          <Form.Item name="pot_size">
+          <Slider
+          min={1}
+          max={20}
+          marks={{
+            5: 5,
+            10: 10,
+            15: 15,
+            20: 20,
+          }}
+        />
           </Form.Item>
         </Form>
       </Modal>
     </div>
   );
-};
+}
 
-export default EditPlantSpecies;
+export default EditPotSize

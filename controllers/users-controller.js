@@ -39,7 +39,7 @@ router.get("/", (req, res) => {
 
 //* ==========GETS USER BY ID=========== *//
 // localhost:4000/v1/users/:id
-router.get("/:username", (req, res) => {
+router.get("/:username", authenticateToken, (req, res) => {
   const username = req.params.username;
   User.findOne({ username: username })
     .populate("plants")

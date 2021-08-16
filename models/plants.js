@@ -26,6 +26,7 @@ const plantSchema = new Schema({
   log_entries:[
     {
     pub_date: {type: Date, default: Date.now},
+    headline: {type: String},
     body_text:{type: String}
   }
 ]

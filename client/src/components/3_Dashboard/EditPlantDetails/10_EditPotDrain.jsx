@@ -1,11 +1,11 @@
-import React from "react";
-import { Modal, Input, Form } from "antd";
+import React from 'react'
+import { Modal, Input, Form, Radio } from "antd";
 
-const EditPlantSpecies = ({
+const EditPotDrain = ({
   userStorage,
   plant,
-  speciesVisible,
-  setSpeciesVisible,
+  drainVisible,
+  setDrainVisible,
   formChanged,
   setFormChanged,
 }) => {
@@ -13,12 +13,12 @@ const EditPlantSpecies = ({
 
   const handleSubmit = async (fieldsValues) => {
     const formData = form.getFieldsValue(true);
-    console.log("formData: ", formData.species);
+    console.log("formData: ", formData.pot_drain);
     try {
       await fetch(`/v1/plants/${plant._id}`, {
         method: "PUT",
         body: JSON.stringify({
-          species: formData.species,
+          pot_drain: formData.pot_drain,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -26,7 +26,7 @@ const EditPlantSpecies = ({
         },
       });
       form.resetFields();
-      setSpeciesVisible(false);
+      setDrainVisible(false);
       setFormChanged(!formChanged);
     } catch (error) {
       console.log(error);
@@ -36,11 +36,11 @@ const EditPlantSpecies = ({
   return (
     <div>
       <Modal
-        visible={speciesVisible}
-        title="Edit Species"
+        visible={drainVisible}
+        title="Edit Pot Drainage"
         centered
         onCancel={() => {
-          setSpeciesVisible(false);
+          setDrainVisible(false);
         }}
         okText="Submit"
         onOk={handleSubmit}
@@ -53,13 +53,16 @@ const EditPlantSpecies = ({
             modifier: "public",
           }}
         >
-          <Form.Item name="species">
-            <Input placeholder={plant.species} />
+          <Form.Item name="pot_drain">
+          <Radio.Group>
+          <Radio.Button value={true}>Yes</Radio.Button>
+          <Radio.Button value={false}>No</Radio.Button>
+          </Radio.Group>
           </Form.Item>
         </Form>
       </Modal>
     </div>
   );
-};
+}
 
-export default EditPlantSpecies;
+export default EditPotDrain

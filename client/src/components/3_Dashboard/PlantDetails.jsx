@@ -100,11 +100,11 @@ const PlantDetails = () => {
 
           <NameSpeciesDate userStorage={userStorage} plant={plant} formChanged={formChanged} setFormChanged={setFormChanged}/>
 
-          <CareCountdown plant={plant} />
+          <CareCountdown userStorage={userStorage} plant={plant} formChanged={formChanged} setFormChanged={setFormChanged} />
 
-          <Environment plant={plant}/>
+          <Environment userStorage={userStorage} plant={plant} formChanged={formChanged} setFormChanged={setFormChanged}/>
 
-          <Edible plant={plant} />
+          <Edible userStorage={userStorage} plant={plant} formChanged={formChanged} setFormChanged={setFormChanged} />
         </Col>
       </Row>
     </div>
