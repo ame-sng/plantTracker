@@ -29,7 +29,6 @@ const authenticateToken = (req, res, next) => {
 
 //* ==========GETS ALL PLANTS=========== *//
 // localhost:4000/v1/plants/
-//! ADD AUTHENTICATION?
 router.get("/", (req, res) => {
   Plant.find({}, (err, foundPlants) => {
     if (err) {
@@ -52,8 +51,6 @@ router.get("/:name", (req, res) => {
 });
 
 //* ==========CREATE A PLANT=========== *//
-//! ADD AUTHENTICATION
-
 router.post("/upload", authenticateToken, async (req, res) => {
   try {
     const fileString = req.body.data;
@@ -99,10 +96,48 @@ router.post("/upload", authenticateToken, async (req, res) => {
   }
 });
 
+
+
+
 //* ==========UPDATE A PLANT=========== *//
+//UPDATES IMAGE
+router.put("/:id/image", authenticateToken, async (req, res) => {
+  try {
+    const id = req.params.id
+    const fileString = req.body.data;
+    console.log("fileString: ", fileString);
+    const uploadResponse = await cloudinary.uploader.upload(fileString, {
+      upload_preset: "plantTracker",
+    });
+    console.log("uploadResponse: ", uploadResponse);
+    // res.json({ msg: "yay uploaded to cloudinary!" });
+    Plant.findByIdAndUpdate(id, 
+      {$push: {"image_upload": uploadResponse.secure_url }},
+      {new: true},
+      (err, plantImage) => {
+        if (err) {
+          res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
+          return
+        }
+        res.status(StatusCodes.OK).json(plantImage)
+        return
+      });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ err: "Uh oh. Something went wrong" });
+    return
+  }
+});
+
+//UPDATES ALL
 router.put("/:id", authenticateToken, (req, res) => {
   const id = req.params.id;
-  Plant.findByIdAndUpdate(id, req.body, { new: true }, (err, updatedPlant) => {
+    
+  Plant.findByIdAndUpdate(
+    id, 
+    req.body, 
+    { new: true }, 
+    (err, updatedPlant) => {
     if (err) {
       res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
     }

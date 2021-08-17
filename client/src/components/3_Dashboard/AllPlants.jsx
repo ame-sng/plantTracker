@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { LogContext } from "../../LogContext";
-import { useQuery } from "react-query";
+import { useQueryClient, useQuery } from "react-query";
 import axios from "axios";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 import { Card, Row, Col, Collapse, Tabs, Divider, Button, Image, Typography } from "antd";
 
@@ -19,10 +20,22 @@ const AllPlants = () => {
   }
   const userStorage = getUserInfo();
   console.log("Display all plants userStorage: ", userStorage)
+  
+  // const queryClient = useQueryClient()
+  // queryClient.invalidateQueries("user")
 
   const { username } = useParams();
+  const options = {
+    method: "GET",
+    headers : {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userStorage.token}`,
+    },
+    url: `/v1/users/${username}`
+  }
+  //!ADD OPTIONS
   const { data, isLoading, error } = useQuery(["user", username], () =>
-    axios(`/v1/users/${username}`)
+    axios(options)
   );
 
   const user = data?.data;
@@ -49,7 +62,9 @@ const AllPlants = () => {
   const nolocPlants = user?.plants.filter((plant) => (plant.location !== "Indoor") && (plant.location !== "Outdoor"));
   console.log("no locale", nolocPlants);
 
-  //here
+  const handleDelete = () => {
+    console.log("delete clicked")
+  }
   
   return (
     <div>
@@ -68,24 +83,25 @@ const AllPlants = () => {
       <Row gutter={[16, 16]}>
         {indoorPlants?.map((inPlant, index) => (
           <Col xs={24} sm={12} md={8} lg={6} xl={4}>
-            <Link to={`/dashboard/${username}/${inPlant.name}`}>
             <Card
+            style={{ width: 200 }}
+            title={<Link to={`/dashboard/${username}/${inPlant.name}`}>{inPlant.name}</Link>}
               cover={
+                <Link to={`/dashboard/${username}/${inPlant.name}`}>
                 <Image
                   alt="example"
-                  height={200}
-                  width="100%"
                   preview={false}
                   src={inPlant.image_upload[inPlant.image_upload.length - 1]}
                 />
+            </Link>
               }
+              extra={<DeleteOutlined key="delete" onClick={handleDelete} />}
               key={index}
             >
-              <Meta
+              {/* <Meta
                 title={inPlant.name}
-              />
+              /> */}
             </Card>
-            </Link>
           </Col>
         ))}
       </Row>
@@ -97,21 +113,20 @@ const AllPlants = () => {
           <Col xs={24} sm={12} md={8} lg={6} xl={4}>
             <Link to={`/dashboard/${username}/${outPlant.name}`}>
             <Card
+            style={{ width: 200 }}
+            title={<Link to={`/dashboard/${username}/${outPlant.name}`}>{outPlant.name}</Link>}
               cover={
+                <Link to={`/dashboard/${username}/${outPlant.name}`}>
                 <Image
-                height={200}
-                  width="100%"
-                  preview={false}
                   alt="example"
+                  preview={false}
                   src={outPlant.image_upload[outPlant.image_upload.length - 1]}
                 />
+            </Link>
               }
+              extra={<DeleteOutlined key="delete" onClick={handleDelete} />}
               key={index}
             >
-              <Meta
-                title={outPlant.name}
-                description="This is the description"
-              />
             </Card>
             </Link>
           </Col>
@@ -125,21 +140,20 @@ const AllPlants = () => {
           <Col xs={24} sm={12} md={8} lg={6} xl={4}>
             <Link to={`/dashboard/${username}/${nolocPlant.name}`}>
             <Card
+            style={{ width: 200, height:200 }}
+            title={<Link to={`/dashboard/${username}/${nolocPlant.name}`}>{nolocPlant.name}</Link>}
               cover={
+                <Link to={`/dashboard/${username}/${nolocPlant.name}`}>
                 <Image
-                height={200}
-                  width="100%"
-                  preview={false}
                   alt="example"
+                  preview={false}
                   src={nolocPlant.image_upload[nolocPlant.image_upload.length - 1]}
                 />
+            </Link>
               }
+              extra={<DeleteOutlined key="delete" onClick={handleDelete} />}
               key={index}
             >
-              <Meta
-                title={nolocPlant.name}
-                description="This is the description"
-              />
             </Card>
             </Link>
           </Col>

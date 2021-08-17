@@ -39,37 +39,50 @@ const CareCountdown = ({ plant }) => {
     <div>
       {plant.water_freq ? 
         (<Row>
+          <Row>
+          <Title className="rubik" level={4}> Water every {plant.water_freq} days</Title>
+          </Row>
+          <Row>
           <Col span={12}>
           <Title className="rubik" level={4}> Water {plant.name} in </Title>
           </Col>
           <Col span={12}>
           <Countdown
           valueStyle={{fontSize: "16px", fontFamily: "'Rubik', sans-serif"}}
-            value={waterdeadline}
-            onFinish={watered}
-            format="D [Days] H [hours] m [min] s [sec]"
+          value={waterdeadline}
+          onFinish={watered}
+          format="D [Days] H [hours] m [min] s [sec]"
           />
           </Col>
+          </Row>
+          <Row>
           <Button onClick={() => {setWaterDeadline(Date.now() + 1000 * 60 * 60 * 24 * plant.water_freq);}}>
         Click when watered to restart countdown
       </Button>
+          </Row>
         </Row>) : <Title className="rubik" level={4}> Water Frequency not provided </Title>
       }
 
       {plant.fertilise_freq ? (
         <Row>
+          <Row>
+          <Title className="rubik" level={4}> Fertilise every {plant.fertilise_freq} days</Title>
+          </Row>
+          <Row>
           <Col span={12}>
           <Title className="rubik" level={4}> Fertilise {plant.name} in </Title>
           </Col>
           <Col span={12}>
           <Countdown
           valueStyle={{fontSize: "16px", fontFamily: "'Rubik', sans-serif"}}
-            value={fertDeadline}
-            onFinish={fertilised}
-            format="D [Days] H [hours] m [min] s [sec]"
+          value={fertDeadline}
+          onFinish={fertilised}
+          format="D [Days] H [hours] m [min] s [sec]"
           />
           </Col>
+          </Row>
         </Row>
+        
       ) : <Title className="rubik" level={4}> Fertilise Frequency not provided </Title>}
 
 {plant.progressTrack_freq ? (

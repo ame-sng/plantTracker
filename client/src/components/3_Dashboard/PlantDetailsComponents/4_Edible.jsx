@@ -23,22 +23,22 @@ const Edible = ({ userStorage, plant, formChanged, setFormChanged }) => {
   const [lastHarvestVis, setLastHarvestVis] = useState(false);
   const [methodVis, setMethodVis] = useState(false);
 
-  useEffect(() => {
-    try {
-      fetch(`/v1/plants/${plant._id}`, {
-        method: "PUT",
-        body: JSON.stringify({
-          edible: edibleSwitch,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userStorage.token}`,
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }, [edibleSwitch]);
+  // useEffect(() => {
+  //   try {
+  //     fetch(`/v1/plants/${plant._id}`, {
+  //       method: "PUT",
+  //       body: JSON.stringify({
+  //         edible: edibleSwitch,
+  //       }),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${userStorage.token}`,
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, [edibleSwitch]);
 
   const onChange = async (checked) => {
     console.log(`switch to ${checked}`);

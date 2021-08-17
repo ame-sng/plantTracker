@@ -7,6 +7,7 @@ import Signup from './components/2_Login_Signup/Signup';
 import AddPlant from './components/5_Form/AddPlant';
 import AllPlants from './components/3_Dashboard/AllPlants';
 import PlantDetails from './components/3_Dashboard/PlantDetails';
+import Entries from './components/3_Dashboard/PlantDetailsComponents/5_Entries';
 
 const Main = () => {
 
@@ -27,6 +28,9 @@ const Main = () => {
         </Route>
         <Route exact path="/addplant">
           <AddPlant />
+        </Route>
+        <Route path="/dashboard/:username/:name/log">
+          <Entries />
         </Route>
         <Route path="/dashboard/:username/:name">
           <PlantDetails />

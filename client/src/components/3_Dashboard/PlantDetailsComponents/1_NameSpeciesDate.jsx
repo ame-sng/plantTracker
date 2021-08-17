@@ -6,6 +6,7 @@ import EditPlantName from "../EditPlantDetails/1_EditPlantName";
 import EditPlantSpecies from "../EditPlantDetails/2_EditPlantSpecies";
 import EditPlantDate from "../EditPlantDetails/3_EditPlantDate";
 
+
 const { Title } = Typography;
 
 const NameSpeciesDate = ({

@@ -16,7 +16,6 @@ function App() {
   const queryClient = new QueryClient();
   const [userDeets, setUserDeets] = useState(null);
 
-
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
