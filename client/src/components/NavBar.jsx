@@ -5,15 +5,17 @@ import { Menu, Select, Button } from "antd";
 import { Link } from "react-router-dom";
 
 
-const NavBar = () => {
+const NavBar = ({userDeets, setUserDeets, loggedIn, setLoggedIn}) => {
   const history = useHistory();
   const [select, setSelect] = useState("")
   
-  const getUserInfo = () => {
-    const userInfo = localStorage.getItem("userInfo");
-    return JSON.parse(userInfo);
-  };
-  const userStorage = getUserInfo();
+  // const getUserInfo = () => {
+  //   const userInfo = localStorage.getItem("userInfo");
+  //   return JSON.parse(userInfo);
+  // };
+  // const userStorage = getUserInfo();
+  // const username = userStorage.username
+  // console.log("userstorage navbar: ", userStorage)
 
   const handleClick = (e) => {
     console.log("click", e);
@@ -32,30 +34,59 @@ const NavBar = () => {
           </Link>
         </Menu.Item>
 
-        {userStorage && (
+        {loggedIn ? 
+        (<>
+          <Menu.Item key="Dashboard" icon={<SmileTwoTone />} >
+            <Link to ={`dashboard/${userDeets.username}`}>
+            <span className="knewave">My Babies</span>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="Logout" onClick = {() => {
+            localStorage.removeItem("userInfo");
+            setLoggedIn(false)
+            history.push("/");
+            }}>
+              <Button type="primary" ghost>
+            <span className="knewave" ><LogoutOutlined /> Logout</span>
+              </Button>
+          </Menu.Item>
+          </>)
+        : (<>
+          <Menu.Item key="Login" icon = {<LoginOutlined />}>
+            <Link to ="/login">
+            <span className="knewave">Login</span>
+            </Link>
+          </Menu.Item>
+          </>)
+        }
+
+        {/* {loggedIn && (
         <Menu.Item key="Dashboard" icon={<SmileTwoTone />} >
-          <Link to ={"/"}>
-          <span className="knewave">Babies</span>
+          <Link to ={`dashboard/${userDeets.username}`}>
+          <span className="knewave">My Babies</span>
           </Link>
         </Menu.Item>
-        )}
+        )} */}
 
+        {/* {!loggedIn && (
         <Menu.Item key="Login" icon = {<LoginOutlined />}>
           <Link to ="/login">
           <span className="knewave">Login</span>
           </Link>
         </Menu.Item>
+        )} */}
         
-        {userStorage && (
+        {/* {loggedIn && (
         <Menu.Item key="Logout" onClick = {() => {
           localStorage.removeItem("userInfo");
+          setLoggedIn(false)
           history.push("/");
           }}>
             <Button type="primary" ghost>
           <span className="knewave" ><LogoutOutlined /> Logout</span>
             </Button>
         </Menu.Item>
-        )}
+        )} */}
     </Menu>
   )
 }

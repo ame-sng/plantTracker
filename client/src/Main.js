@@ -9,7 +9,7 @@ import AllPlants from './components/3_Dashboard/AllPlants';
 import PlantDetails from './components/3_Dashboard/PlantDetails';
 import Entries from './components/3_Dashboard/PlantDetailsComponents/5_Entries';
 
-const Main = () => {
+const Main = ({userDeets, setUserDeets, loggedIn, setLoggedIn}) => {
 
   return (
     <main>
@@ -21,10 +21,10 @@ const Main = () => {
           {/* <LandingPagev2 /> */}
         </Route>
         <Route exact path="/login">
-          <Login />
+          <Login userDeets={userDeets} setUserDeets={setUserDeets} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
         </Route>
         <Route exact path="/signup">
-          <Signup />
+          <Signup userDeets={userDeets} setUserDeets={setUserDeets} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
         </Route>
         <Route exact path="/addplant">
           <AddPlant />

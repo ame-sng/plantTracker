@@ -11,12 +11,14 @@ import Edible from "./PlantDetailsComponents/4_Edible";
 import Entries from "./PlantDetailsComponents/5_Entries";
 import NameSpeciesDate from "./PlantDetailsComponents/1_NameSpeciesDate";
 import EditImageUpload from "./EditPlantDetails/18_EditImageUpload";
+import AddLog from "./AddLog";
 
 const { Title, Text } = Typography;
 
 const PlantDetails = () => {
   const [formChanged, setFormChanged] = useState(false);
   const [imageVisible, setImageVisible] = useState(false);
+  const [visible, setVisible] = useState(false); //drawer
 
   //*======Get User Info from Local Storage============
   const getUserInfo = () => {
@@ -44,6 +46,10 @@ const PlantDetails = () => {
 
   const plant = data?.data;
   console.log(plant);
+
+  const handleImage = (e) => {
+    console.log("value: ", e)
+  }
 
   return (
     <div>
@@ -91,6 +97,8 @@ const PlantDetails = () => {
                       height: "120px",
                     }}
                     src={image}
+                    key={index}
+                    onClick={handleImage}
                   />
                 </div>
               ))}
@@ -126,9 +134,16 @@ const PlantDetails = () => {
             setFormChanged={setFormChanged}
           />
 
-          <Link to={`/dashboard/${userStorage.username}/${plant.name}/log`}>
+          {/* <Link to={`/dashboard/${userStorage.username}/${plant.name}/log`}>
           <Button>Add Log</Button>
-          </Link>
+          </Link> */}
+
+          <AddLog userStorage={userStorage}
+            plant={plant}
+            formChanged={formChanged}
+            setFormChanged={setFormChanged}
+            visible={visible}
+            setVisible={setVisible}/>
 
         </Col>
       </Row>

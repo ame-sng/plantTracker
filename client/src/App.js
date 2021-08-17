@@ -14,7 +14,14 @@ const { Header, Content, Footer } = Layout;
 
 function App() {
   const queryClient = new QueryClient();
-  const [userDeets, setUserDeets] = useState(null);
+  const [userDeets, setUserDeets] = useState({
+    username:"",
+    email: "",
+    token: "",
+    plants: [],
+    _id: ""
+  });
+  const [loggedIn, setLoggedIn] = useState(false)
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -25,12 +32,12 @@ function App() {
             <Link to="/">
               <img src="https://i.imgur.com/ZVDDu0K.png" className="logo" />
             </Link>
-            <NavBar userDeets={userDeets} />
+            <NavBar userDeets={userDeets} setUserDeets={setUserDeets} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
           </Header>
           <Content style={{ padding: "0 50px" }}>
             <div style={{ margin: "16px 0" }} />
             <div className="site-layout-content">
-              <Main/>
+              <Main userDeets={userDeets} setUserDeets={setUserDeets} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
             </div>
           </Content>
           <Footer style={{ textAlign: "center" }}>

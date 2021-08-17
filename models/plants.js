@@ -25,7 +25,7 @@ const plantSchema = new Schema({
   last_harvest: {type: Date},
   log_entries:[
     {
-    pub_date: {type: Date, default: Date.now},
+    pub_date: {type: Date},
     headline: {type: String},
     body_text:{type: String}
   }

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Form, Input, Button, Row, Col } from 'antd';
 import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
 
-const Signup = () => {
+const Signup = ({userDeets, setUserDeets, loggedIn, setLoggedIn}) => {
   // const {userDeets, setUserDeets} = useContext(LogContext);
   const history = useHistory();
   const [form] = Form.useForm();
@@ -45,6 +45,8 @@ const Signup = () => {
       })
       .then((data) => {
         console.log(data)
+        setUserDeets(data)
+        setLoggedIn(true)
         localStorage.setItem("userInfo", JSON.stringify(data))
         setLoading(false);
         form.resetFields();

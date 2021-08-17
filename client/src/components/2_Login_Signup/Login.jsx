@@ -8,7 +8,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 60 }} spin />
 
-const Login = () => {
+const Login = ({userDeets, setUserDeets, loggedIn, setLoggedIn}) => {
   // const {userDeets, setUserDeets} = useContext(LogContext);
   const history = useHistory();
 
@@ -49,15 +49,17 @@ const Login = () => {
       })
       .then((data) => {
         console.log("data from login: ", data)
-        // setUserDeets(data)
-        // console.log("userDeets: ", userDeets)
+        setUserDeets(data)
+        setLoggedIn(true)
         localStorage.setItem("userInfo", JSON.stringify(data))
         setLoading(false);
         setShowError(false);
         form.resetFields();
-        return history.push(`/dashboard/${data.username}`)
+ 
         // return <Redirect to={`/dashboard/${data.username}`}/>
-
+      })
+      .then(()=>{
+        return history.push(`/`)
       })
     .catch ((error) => {
       console.log("error: ", error);

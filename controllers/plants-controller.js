@@ -129,10 +129,29 @@ router.put("/:id/image", authenticateToken, async (req, res) => {
   }
 });
 
+//UPDATES LOGS
+router.put("/log/:id", authenticateToken, (req,res)=> {
+  const id = req.params.id;
+  const log_entry = {
+    headline: req.body.headline,
+    pub_date: req.body.pub_date,
+    body_text: req.body.body_text,
+    }
+  Plant.findByIdAndUpdate(
+    id,
+    {$push: { log_entries: log_entry}},
+    {new:true},
+    (err, updatedPlant) => {
+      if (err) {
+        res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
+      }
+      res.status(StatusCodes.OK).send(updatedPlant);
+  });
+})
+
 //UPDATES ALL
 router.put("/:id", authenticateToken, (req, res) => {
-  const id = req.params.id;
-    
+  const id = req.params.id;    
   Plant.findByIdAndUpdate(
     id, 
     req.body, 
@@ -145,6 +164,7 @@ router.put("/:id", authenticateToken, (req, res) => {
   });
 });
 
+
 //* ==========DELETE A PLANT=========== *//
 router.delete("/:id", (req, res) => {
   const id = req.params.id;
@@ -155,5 +175,21 @@ router.delete("/:id", (req, res) => {
     res.status(StatusCodes.OK).json(deletedPlant);
   });
 });
+
+//* ==========DELETE AN IMAGE=========== *//
+router.put("/:id", authenticateToken, (req, res) => {
+  const id = req.params.id;    
+  Plant.findByIdAndUpdate(
+    id, 
+    req.body, 
+    { new: true }, 
+    (err, updatedPlant) => {
+    if (err) {
+      res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
+    }
+    res.status(StatusCodes.OK).send(updatedPlant);
+  });
+});
+
 
 module.exports = router;
