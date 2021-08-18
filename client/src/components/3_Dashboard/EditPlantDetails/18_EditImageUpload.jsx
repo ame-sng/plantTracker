@@ -27,6 +27,7 @@ const EditImageUpload = ({
           Authorization: `Bearer ${userStorage.token}`,
         },
       });
+      form.resetFields();
       setImageVisible(false);
       setFormChanged(!formChanged);
       return

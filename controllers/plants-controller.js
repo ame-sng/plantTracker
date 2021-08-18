@@ -96,7 +96,30 @@ router.post("/upload", authenticateToken, async (req, res) => {
   }
 });
 
-
+//CREATES A LOG
+router.put("/log/:id", authenticateToken, async (req,res)=> {
+  const id = req.params.id;
+  const log_entry = {
+    pub_date: req.body.pub_date,
+    headline: req.body.headline,
+    body_text: req.body.body_text,
+    }
+    try {
+    const plant = await Plant.findById(id)
+    console.log(plant)
+    console.log("log: ", log_entry)
+    plant.log_entries.push(log_entry)
+    const updated = await plant.save()
+    console.log(updated)
+    res.status(StatusCodes.OK).json(updated)
+      return
+  }
+    catch (err) {
+      console.log(err)
+      res.status(500).json({ err: "Uh oh. Something went wrong" });
+      return
+    }
+})
 
 
 //* ==========UPDATE A PLANT=========== *//
@@ -129,29 +152,16 @@ router.put("/:id/image", authenticateToken, async (req, res) => {
   }
 });
 
-//UPDATES LOGS
-router.put("/log/:id", authenticateToken, async (req,res)=> {
-  const id = req.params.id;
-  const log_entry = {
-    pub_date: req.body.pub_date,
-    headline: req.body.headline,
-    body_text: req.body.body_text,
-    }
-  // Plant.findByIdAndUpdate(
-  //   id,
-  //   {$push: {log_entries: log_entry}},
-  //   {new:true},
-  //   (err, updatedPlant) => {
-  //     if (err) {
-  //       res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
-  //     }
-  //     res.status(StatusCodes.OK).send(updatedPlant);
-  // });
+
+//UPDATES A POST
+router.put("/log/update/:logId", authenticateToken, async (req,res)=> {
+  const id = req.body._id;
+  const logId = {_id: req.params.logId}
     try {
     const plant = await Plant.findById(id)
     console.log(plant)
-    console.log("log: ", log_entry)
-    plant.log_entries.push(log_entry)
+    console.log("log Id is: ", logId)
+    plant.log_entries.pull(logId)
     const updated = await plant.save()
     console.log(updated)
     res.status(StatusCodes.OK).json(updated)
@@ -206,5 +216,25 @@ router.put("/:id", authenticateToken, (req, res) => {
   });
 });
 
+//* ==========DELETE A POST=========== *//
+router.put("/log/delete/:logId", authenticateToken, async (req,res)=> {
+  const id = req.body._id;
+  const logId = {_id: req.params.logId}
+    try {
+    const plant = await Plant.findById(id)
+    console.log(plant)
+    console.log("log Id is: ", logId)
+    plant.log_entries.pull(logId)
+    const updated = await plant.save()
+    console.log(updated)
+    res.status(StatusCodes.OK).json(updated)
+      return
+  }
+    catch (err) {
+      console.log(err)
+      res.status(500).json({ err: "Uh oh. Something went wrong" });
+      return
+    }
+})
 
 module.exports = router;
