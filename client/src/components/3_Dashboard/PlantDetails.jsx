@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { Image, Button, Row, Col, Typography } from "antd";
+import { Image, Button, Row, Col, Typography, Tabs } from "antd";
 import { LeftOutlined, RightOutlined, EditOutlined } from "@ant-design/icons";
 import Environment from "./PlantDetailsComponents/3_Environment";
 import CareCountdown from "./PlantDetailsComponents/2_CareCountdown";
@@ -14,6 +14,7 @@ import EditImageUpload from "./EditPlantDetails/18_EditImageUpload";
 import AddLog from "./AddLog";
 
 const { Title, Text } = Typography;
+const { TabPane } = Tabs;
 
 const PlantDetails = () => {
   const [formChanged, setFormChanged] = useState(false);
@@ -57,88 +58,93 @@ const PlantDetails = () => {
         <Button>Back</Button>
       </Link>
       <Text> {plant.location}</Text>
+      <Tabs type="card" >
+        <TabPane tab="Plant Details" key="1">
+          <Row style={{ marginTop: "15px" }}>
+            <Col span={8}>
+              <Row>
+                <Title className="rubik" level={4}>
+                  Latest Image of {plant.name}
+                </Title>
+                <EditOutlined
+                  onClick={() => {
+                    setImageVisible(true);
+                  }}
+                  style={{ margin: "5px" }}
+                />
+                <EditImageUpload
+                  userStorage={userStorage}
+                  plant={plant}
+                  imageVisible={imageVisible}
+                  setImageVisible={setImageVisible}
+                  formChanged={formChanged}
+                  setFormChanged={setFormChanged}
+                />
+              </Row>
+              <Image
+                height={300}
+                src={plant.image_upload[plant.image_upload.length - 1]}
+              />
+              <Title className="rubik" level={4}>
+                {plant.name}'s progress:
+              </Title>
+              <Row>
+                <Image.PreviewGroup>
+                  {plant?.image_upload.map((image, index) => (
+                    <div key={index} style={{ margin: 5 }}>
+                      <Image
+                        style={{
+                          objectFit: "cover",
+                          width: "120px",
+                          height: "120px",
+                        }}
+                        src={image}
+                        key={index}
+                        onClick={handleImage}
+                      />
+                    </div>
+                  ))}
+                </Image.PreviewGroup>
+              </Row>
+            </Col>
+            <Col span={16}>
+              <NameSpeciesDate
+                userStorage={userStorage}
+                plant={plant}
+                formChanged={formChanged}
+                setFormChanged={setFormChanged}
+              />
 
-      <Row style={{ marginTop: "15px" }}>
-        <Col span={8}>
-          <Row>
-            <Title className="rubik" level={4}>
-              Latest Image of {plant.name}
-            </Title>
-            <EditOutlined
-              onClick={() => {
-                setImageVisible(true);
-              }}
-              style={{ margin: "5px" }}
-            />
-            <EditImageUpload
-              userStorage={userStorage}
-              plant={plant}
-              imageVisible={imageVisible}
-              setImageVisible={setImageVisible}
-              formChanged={formChanged}
-              setFormChanged={setFormChanged}
-            />
-          </Row>
-          <Image
-            height={300}
-            src={plant.image_upload[plant.image_upload.length - 1]}
-          />
-          <Title className="rubik" level={4}>
-            {plant.name}'s progress:
-          </Title>
-          <Row>
-            <Image.PreviewGroup>
-              {plant?.image_upload.map((image, index) => (
-                <div key={index} style={{ margin: 5 }}>
-                  <Image
-                    style={{
-                      objectFit: "cover",
-                      width: "120px",
-                      height: "120px",
-                    }}
-                    src={image}
-                    key={index}
-                    onClick={handleImage}
-                  />
-                </div>
-              ))}
-            </Image.PreviewGroup>
-          </Row>
-        </Col>
-        <Col span={16}>
-          <NameSpeciesDate
-            userStorage={userStorage}
-            plant={plant}
-            formChanged={formChanged}
-            setFormChanged={setFormChanged}
-          />
+              <CareCountdown
+                userStorage={userStorage}
+                plant={plant}
+                formChanged={formChanged}
+                setFormChanged={setFormChanged}
+              />
 
-          <CareCountdown
-            userStorage={userStorage}
-            plant={plant}
-            formChanged={formChanged}
-            setFormChanged={setFormChanged}
-          />
+              <Environment
+                userStorage={userStorage}
+                plant={plant}
+                formChanged={formChanged}
+                setFormChanged={setFormChanged}
+              />
 
-          <Environment
-            userStorage={userStorage}
-            plant={plant}
-            formChanged={formChanged}
-            setFormChanged={setFormChanged}
-          />
+              <Edible
+                userStorage={userStorage}
+                plant={plant}
+                formChanged={formChanged}
+                setFormChanged={setFormChanged}
+              />
 
-          <Edible
-            userStorage={userStorage}
-            plant={plant}
-            formChanged={formChanged}
-            setFormChanged={setFormChanged}
-          />
-
-          {/* <Link to={`/dashboard/${userStorage.username}/${plant.name}/log`}>
+              {/* <Link to={`/dashboard/${userStorage.username}/${plant.name}/log`}>
           <Button>Add Log</Button>
-          </Link> */}
+        </Link> */}
 
-          <AddLog
+            </Col>
+          </Row>
+        </TabPane>
+        <TabPane tab="Plant Logs" key="2">
+          <Entries
             userStorage={userStorage}
             plant={plant}
             formChanged={formChanged}
@@ -146,15 +152,8 @@ const PlantDetails = () => {
             visible={visible}
             setVisible={setVisible}
           />
-
-          <Entries
-            userStorage={userStorage}
-            plant={plant}
-            formChanged={formChanged}
-            setFormChanged={setFormChanged}
-          />
-        </Col>
-      </Row>
+        </TabPane>
+      </Tabs>
     </div>
   );
 };

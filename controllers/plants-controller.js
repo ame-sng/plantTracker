@@ -50,6 +50,8 @@ router.get("/:name", (req, res) => {
   });
 });
 
+
+
 //* ==========CREATE A PLANT=========== *//
 router.post("/upload", authenticateToken, async (req, res) => {
   try {
@@ -161,7 +163,10 @@ router.put("/log/update/:logId", authenticateToken, async (req,res)=> {
     const plant = await Plant.findById(id)
     console.log(plant)
     console.log("log Id is: ", logId)
-    plant.log_entries.pull(logId)
+    console.log("right headline: ",plant.log_entries.id(logId).headline)
+    plant.log_entries.id(logId).headline = req.body.headline
+    plant.log_entries.id(logId).pub_date = req.body.newDate
+    plant.log_entries.id(logId).body_text = req.body.body_text
     const updated = await plant.save()
     console.log(updated)
     res.status(StatusCodes.OK).json(updated)

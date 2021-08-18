@@ -27,7 +27,7 @@ const EditPlantSpecies = ({
       });
       form.resetFields();
       setSpeciesVisible(false);
-      // setFormChanged(!formChanged);
+      setFormChanged(!formChanged);
     } catch (error) {
       console.log(error);
     }

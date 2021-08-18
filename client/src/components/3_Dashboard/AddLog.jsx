@@ -60,7 +60,7 @@ const AddLog = ({ userStorage, plant, formChanged, setFormChanged , visible, set
       <Drawer
         title="Create a new log entry"
         placement="bottom"
-        height={500}
+        height="60%"
         closable={false}
         onClose={onClose}
         visible={visible}
