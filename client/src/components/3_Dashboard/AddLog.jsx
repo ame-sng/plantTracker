@@ -65,25 +65,12 @@ const AddLog = ({ userStorage, plant, formChanged, setFormChanged , visible, set
         onClose={onClose}
         visible={visible}
         bodyStyle={{ paddingBottom: 80 }}
-        footer={
-          <div
-            style={{
-              textAlign: "right",
-            }}
-          >
-            <Button onClick={onClose} style={{ marginRight: 8 }}>
-              Cancel
-            </Button>
-            <Button onClick={handleSubmit} type="primary">
-              Submit
-            </Button>
-          </div>
-        }
       >
         <Form 
         layout="vertical" 
         hideRequiredMark
         form={form}
+        onFinish={handleSubmit}
         >
           <Form.Item
           name="pub_date"
@@ -106,6 +93,18 @@ const AddLog = ({ userStorage, plant, formChanged, setFormChanged , visible, set
           >
             <TextArea rows={5}/>
           </Form.Item>
+          <div
+            style={{
+              textAlign: "right",
+            }}
+          >
+            <Button onClick={onClose} style={{ marginRight: 8 }}>
+              Cancel
+            </Button>
+            <Button htmlType="submit" type="primary" >
+            Submit
+          </Button>
+          </div>
         </Form>
       </Drawer>
     </>

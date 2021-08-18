@@ -20,6 +20,9 @@ const PlantDetails = () => {
   const [formChanged, setFormChanged] = useState(false);
   const [imageVisible, setImageVisible] = useState(false);
   const [visible, setVisible] = useState(false); //drawer
+  const [waterTime, setWaterTime] = useState();
+  const [fertTime, setFertTime] = useState();
+  const [progressTime, setProgressTime] = useState();
 
   //*======Get User Info from Local Storage============
   const getUserInfo = () => {
@@ -120,6 +123,9 @@ const PlantDetails = () => {
                 plant={plant}
                 formChanged={formChanged}
                 setFormChanged={setFormChanged}
+                setWaterTime={setWaterTime}
+                setFertTime={setFertTime}
+                setProgressTime={setProgressTime}
               />
 
               <Environment

@@ -79,7 +79,13 @@ const AllPlants = () => {
 
   function confirm(e) {
     handleDelete(e);
-    message.success("Deleted");
+    message.success({
+      content: 'Plant has been deleted',
+      className: 'knewave',
+      style: {
+        marginTop: '20vh',
+      },
+    });
   }
 
   const handleDelete = (id) => {

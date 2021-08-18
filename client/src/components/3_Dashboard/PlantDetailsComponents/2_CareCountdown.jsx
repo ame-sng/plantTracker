@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import { Statistic, Row, Col, Typography, Button } from "antd";
+import { Statistic, Row, Col, Typography, Button, message, notification } from "antd";
+import { SmileOutlined } from '@ant-design/icons';
 import moment from "moment";
 
 const { Countdown } = Statistic;
 const {Title} = Typography
 
-const CareCountdown = ({ plant }) => {
+const CareCountdown = ({ 
+  plant, 
+  setWaterTime,
+  setFertTime,
+  setProgressTime }) => {
   //! RELOOK AT THE FUNCTIONALITY - USER EXPERIENCE
 
   const [waterdeadline, setWaterDeadline] = useState(
@@ -21,7 +26,14 @@ const CareCountdown = ({ plant }) => {
   const watered = () => {
     console.log("finished!");
     setWaterDeadline(Date.now() + 1000 * 60 * 60 * 24 * plant.water_freq)
-    
+    notification.open({
+      message: 'Notification Title',
+    description:
+      'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+    className: 'rubik',
+    duration: 0,
+    icon: <SmileOutlined style={{ color: '#108ee9' }} />,
+    })
     
   };
   
@@ -40,7 +52,7 @@ const CareCountdown = ({ plant }) => {
       {plant.water_freq ? 
         (<Row>
           <Row>
-          <Title className="rubik" level={4}> Water every {plant.water_freq} days</Title>
+          <Title className="rubik" level={4}> Water every {plant.water_freq} days, </Title>
           </Row>
           <Row>
           <Col span={12}>
@@ -56,7 +68,7 @@ const CareCountdown = ({ plant }) => {
           </Col>
           </Row>
           <Row>
-          <Button onClick={() => {setWaterDeadline(Date.now() + 1000 * 60 * 60 * 24 * plant.water_freq);}}>
+          <Button onClick={() => {setWaterDeadline(Date.now() + 1000 * 1 * 1 * 1 * plant.water_freq);}}>
         Click when watered to restart countdown
       </Button>
           </Row>
