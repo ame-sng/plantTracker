@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal, Form, Upload, Button } from "antd";
-import { UploadOutlined} from '@ant-design/icons';
+import { UploadOutlined } from "@ant-design/icons";
 
 const EditImageUpload = ({
   userStorage,
@@ -11,16 +11,18 @@ const EditImageUpload = ({
   setFormChanged,
 }) => {
   const [form] = Form.useForm();
+  const [imageInfo, setImageInfo] = useState("")
 
   const handleSubmit = async (fieldsValues) => {
-    const id = plant._id
+    const id = plant._id;
     const formData = form.getFieldsValue(true);
-    console.log("formData: ", formData.image_upload[0].thumbUrl);
+    console.log("formData: ", formData)
+    // console.log("formData: ", formData.image_upload[0].thumbUrl);
     try {
       await fetch(`/v1/plants/${id}/image`, {
         method: "PUT",
         body: JSON.stringify({
-          data: formData.image_upload[0].thumbUrl,
+          data: imageInfo,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -30,29 +32,46 @@ const EditImageUpload = ({
       form.resetFields();
       setImageVisible(false);
       setFormChanged(!formChanged);
-      return
+      return;
     } catch (error) {
       console.log(error);
-      return
+      return;
     }
   };
 
-  const normFile = (e) => {
-    console.log("Upload event: ", e);
-    if (Array.isArray(e)) {
-      return e
-    }
-    if (e.fileList.length >1){
-      e.fileList.shift();
-    }
-    return e && e.fileList
+  const handleUpload = (file) => {
+    console.log("file: ", file)
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      console.log("readerresult: ", reader.result)
+      setImageInfo(reader.result)
+    };
+    reader.onerror = () => {
+      console.error("Something went wrong");
+    };
   }
-  const dummyRequest = ({file, onSuccess}) => {
-    setTimeout(()=>{
+
+  // const normFile = (e) => {
+  //   console.log("Upload event: ", e);
+  //   if (Array.isArray(e)) {
+  //     console.log("fileList: ", e)
+  //     return e;
+  //   }
+  //   if (e.fileList.length > 1) {
+  //     e.fileList.shift();
+  //   }
+  //   console.log("event: ", e)
+  //   console.log("fileList: ", e.fileList)
+  //   return e && e.fileList;
+  // };
+
+  const dummyRequest = ({ file, onSuccess }) => {
+    setTimeout(() => {
       onSuccess("ok");
-    }, 0)
-    console.log("dummy request")
-  }
+    }, 0);
+    console.log("dummy request");
+  };
 
   return (
     <div>
@@ -76,13 +95,14 @@ const EditImageUpload = ({
         >
           <Form.Item
             name="image_upload"
-            valuePropName="fileList"
-            getValueFromEvent={normFile}
+            // valuePropName="fileList"
+            // getValueFromEvent={handleUpload}
           >
             <Upload
               listType="picture"
               className="avatar-uploader"
-              customRequest={dummyRequest}
+              beforeUpload={handleUpload}
+              // customRequest={dummyRequest}
             >
               <Button icon={<UploadOutlined />}>Click to upload</Button>
             </Upload>

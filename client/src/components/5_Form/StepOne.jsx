@@ -8,7 +8,7 @@ import {
 } from "antd";
 import { UploadOutlined} from '@ant-design/icons';
 
-const StepOne = ({image, setImage}) => {
+const StepOne = ({setImage}) => {
 
   const normFile = (e) => {
     console.log("Upload event: ", e);
@@ -27,7 +27,18 @@ const StepOne = ({image, setImage}) => {
     console.log("dummy request")
   }
   
-
+  const handleUpload = (file) => {
+    console.log("file: ", file)
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      console.log("readerresult: ", reader.result)
+      setImage(reader.result)
+    };
+    reader.onerror = () => {
+      console.error("Something went wrong");
+    };
+  }
   
   return (
     <>
@@ -37,15 +48,16 @@ const StepOne = ({image, setImage}) => {
         }}
         label="Upload Image"
         name="image_upload" 
-        valuePropName="fileList"
-        getValueFromEvent={normFile}
+        // valuePropName="fileList"
+        // getValueFromEvent={normFile}
         rules={[{ required: true, message: 'Please provide an image' }]}
       >
      {/* <input type="file" name="image_upload"/> */}
      <Upload 
      listType="picture"
      className="avatar-uploader"
-      customRequest={dummyRequest}
+     beforeUpload={handleUpload}
+    customRequest={dummyRequest}
      >
        <Button icon={<UploadOutlined />}>Click to upload</Button>
      </Upload>

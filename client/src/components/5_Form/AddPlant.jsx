@@ -39,7 +39,7 @@ const AddPlant = ({ userDeets }) => {
       await fetch("/v1/plants/upload", {
         method: "POST",
         body: JSON.stringify({
-          data: values.image_upload[0].thumbUrl,
+          data: image,
           name: values.name,
           species: values.species,
           date_started: values.date_started,
