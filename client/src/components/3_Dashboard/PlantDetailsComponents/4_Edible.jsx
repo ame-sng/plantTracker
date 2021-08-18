@@ -204,11 +204,13 @@ const Edible = ({ userStorage, plant, formChanged, setFormChanged }) => {
 
         {/* ====================================================== */}
 
-        <Row>
         {plant.first_harvest ? (
+        <Row>
         <Title className="rubik" level={4}>
           First Harvest: {moment(plant.first_harvest).format("Do MMMM YYYY")}
-        </Title>)
+        </Title>
+        </Row>
+        )
         :
         (<Title className="rubik" level={4}>
             Date of First Harvest not provided
@@ -228,7 +230,6 @@ const Edible = ({ userStorage, plant, formChanged, setFormChanged }) => {
             formChanged={formChanged}
             setFormChanged={setFormChanged}
           />
-        </Row>
 
         {/* ====================================================== */}
 

@@ -29,7 +29,7 @@ const PlantDetails = () => {
   //*====================================================
 
   const { name } = useParams();
-  
+
   const { data, isLoading, error } = useQuery(
     ["plant", name, formChanged],
     () => axios(`/v1/plants/${name}`)
@@ -48,8 +48,8 @@ const PlantDetails = () => {
   console.log(plant);
 
   const handleImage = (e) => {
-    console.log("value: ", e)
-  }
+    console.log("value: ", e);
+  };
 
   return (
     <div>
@@ -71,13 +71,13 @@ const PlantDetails = () => {
               style={{ margin: "5px" }}
             />
             <EditImageUpload
-          userStorage={userStorage}
-          plant={plant}
-          imageVisible={imageVisible}
-          setImageVisible={setImageVisible}
-          formChanged={formChanged}
-          setFormChanged={setFormChanged}
-        />
+              userStorage={userStorage}
+              plant={plant}
+              imageVisible={imageVisible}
+              setImageVisible={setImageVisible}
+              formChanged={formChanged}
+              setFormChanged={setFormChanged}
+            />
           </Row>
           <Image
             height={300}
@@ -106,7 +106,6 @@ const PlantDetails = () => {
           </Row>
         </Col>
         <Col span={16}>
-        
           <NameSpeciesDate
             userStorage={userStorage}
             plant={plant}
@@ -139,13 +138,21 @@ const PlantDetails = () => {
           <Button>Add Log</Button>
           </Link> */}
 
-          <AddLog userStorage={userStorage}
+          <AddLog
+            userStorage={userStorage}
             plant={plant}
             formChanged={formChanged}
             setFormChanged={setFormChanged}
             visible={visible}
-            setVisible={setVisible}/>
+            setVisible={setVisible}
+          />
 
+          <Entries
+            userStorage={userStorage}
+            plant={plant}
+            formChanged={formChanged}
+            setFormChanged={setFormChanged}
+          />
         </Col>
       </Row>
     </div>

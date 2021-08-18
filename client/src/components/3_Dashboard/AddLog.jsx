@@ -41,7 +41,7 @@ const AddLog = ({ userStorage, plant, formChanged, setFormChanged , visible, set
         
           console.log("res: ",res)
           // form.resetFields();
-          // setFormChanged(!formChanged);
+          setFormChanged(!formChanged);
           onClose();
         
         })
