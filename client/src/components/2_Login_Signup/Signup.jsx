@@ -50,7 +50,7 @@ const Signup = ({userDeets, setUserDeets, loggedIn, setLoggedIn}) => {
         localStorage.setItem("userInfo", JSON.stringify(data))
         setLoading(false);
         form.resetFields();
-        return history.push(`/dashboard/${data.username}`)
+        return history.push(`/welcome}`)
 
       })
     .catch ((error) => {

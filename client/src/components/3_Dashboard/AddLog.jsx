@@ -25,13 +25,12 @@ const AddLog = ({ userStorage, plant, formChanged, setFormChanged , visible, set
     };
     console.log("log entry: ", values)
     console.log("plantid: ", plant._id)
-    fetch(`/v1/plants/${plant._id}/log`, {
+    fetch(`/v1/plants/log/${plant._id}`, {
         method: "PUT",
         body: JSON.stringify({
-          log_entries:
-            {headline: values.headline,
+            headline: values.headline,
             pub_date: values.pub_date,
-            body_text: values.body_text}
+            body_text: values.body_text
         }),
         headers: {
           "Content-Type": "application/json",

@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
-import { LogContext } from "../../LogContext";
+import React, { useState, useEffect } from "react";
 import { useHistory, Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Form, Input, Button, Spin, Alert, Row, Col } from "antd";
+import { Form, Input, Button, Alert, Row, Col } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { LoadingOutlined } from '@ant-design/icons';
 
@@ -55,11 +54,9 @@ const Login = ({userDeets, setUserDeets, loggedIn, setLoggedIn}) => {
         setLoading(false);
         setShowError(false);
         form.resetFields();
+        return history.push(`/welcome`)
  
         // return <Redirect to={`/dashboard/${data.username}`}/>
-      })
-      .then(()=>{
-        return history.push(`/`)
       })
     .catch ((error) => {
       console.log("error: ", error);

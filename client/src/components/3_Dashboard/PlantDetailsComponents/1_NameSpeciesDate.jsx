@@ -36,7 +36,7 @@ const NameSpeciesDate = ({
           setNameVisible={setNameVisible}
         />
       </Row>
-
+      <Title className="rubik" level={2}>SUMMARY</Title>
       <Row>
         {plant.species ? (
           <Title className="rubik" level={3}>

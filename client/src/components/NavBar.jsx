@@ -28,14 +28,14 @@ const NavBar = ({userDeets, setUserDeets, loggedIn, setLoggedIn}) => {
         mode="horizontal"
         theme="light"
       >
-        <Menu.Item key="Home" icon={<HomeFilled />} >
-          <Link to ="/">
-          <span className="knewave">Home</span>
-          </Link>
-        </Menu.Item>
 
         {loggedIn ? 
         (<>
+        <Menu.Item key="Home" icon={<HomeFilled />} >
+          <Link to ="/welcome">
+          <span className="knewave">Home</span>
+          </Link>
+        </Menu.Item>
           <Menu.Item key="Dashboard" icon={<SmileTwoTone />} >
             <Link to ={`dashboard/${userDeets.username}`}>
             <span className="knewave">My Babies</span>
@@ -52,6 +52,11 @@ const NavBar = ({userDeets, setUserDeets, loggedIn, setLoggedIn}) => {
           </Menu.Item>
           </>)
         : (<>
+        <Menu.Item key="Home" icon={<HomeFilled />} >
+          <Link to ="/">
+          <span className="knewave">Home</span>
+          </Link>
+        </Menu.Item>
           <Menu.Item key="Login" icon = {<LoginOutlined />}>
             <Link to ="/login">
             <span className="knewave">Login</span>

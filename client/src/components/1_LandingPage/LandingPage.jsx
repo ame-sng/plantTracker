@@ -1,7 +1,9 @@
 import React from 'react'
 import { Row, Col, Button, Image } from "antd";
+import { Link } from "react-router-dom";
 
 const LandingPage = () => {
+
   return (
     <>
     <Row justify="center" align="middle">
@@ -9,10 +11,12 @@ const LandingPage = () => {
           <Image preview={false} src="https://i.imgur.com/7A0BQgU.png"/>
         </Col>
       <Col span={8}>
-      <h1 className="landing-header">The fuss-free way to nurture your plant babies</h1>
-      <Button type="primary"  htmlType="submit" className="fascinate">
+      <h1 className="knewave">The fuss-free way to nurture your plant babies</h1>
+      <Link to="/signup">
+      <Button type="primary" className="fascinate" size="large">
             Start Today
           </Button>
+          </Link>
       </Col>
       </Row>
       <Row justify="center" align="middle">

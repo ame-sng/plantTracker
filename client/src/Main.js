@@ -18,7 +18,9 @@ const Main = ({userDeets, setUserDeets, loggedIn, setLoggedIn}) => {
           {/* MAIN */}
           {/* <h1 style={{fontFamily: "'Fascinate', cursive"}}>MAIN PAGE</h1> */}
           <LandingPage />
-          {/* <LandingPagev2 /> */}
+        </Route>
+        <Route exact path="/welcome">
+          <LandingPagev2 />
         </Route>
         <Route exact path="/login">
           <Login userDeets={userDeets} setUserDeets={setUserDeets} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>

@@ -106,6 +106,7 @@ const PlantDetails = () => {
           </Row>
         </Col>
         <Col span={16}>
+        
           <NameSpeciesDate
             userStorage={userStorage}
             plant={plant}

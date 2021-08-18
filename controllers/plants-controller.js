@@ -130,23 +130,38 @@ router.put("/:id/image", authenticateToken, async (req, res) => {
 });
 
 //UPDATES LOGS
-router.put("/log/:id", authenticateToken, (req,res)=> {
+router.put("/log/:id", authenticateToken, async (req,res)=> {
   const id = req.params.id;
   const log_entry = {
-    headline: req.body.headline,
     pub_date: req.body.pub_date,
+    headline: req.body.headline,
     body_text: req.body.body_text,
     }
-  Plant.findByIdAndUpdate(
-    id,
-    {$push: { log_entries: log_entry}},
-    {new:true},
-    (err, updatedPlant) => {
-      if (err) {
-        res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
-      }
-      res.status(StatusCodes.OK).send(updatedPlant);
-  });
+  // Plant.findByIdAndUpdate(
+  //   id,
+  //   {$push: {log_entries: log_entry}},
+  //   {new:true},
+  //   (err, updatedPlant) => {
+  //     if (err) {
+  //       res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
+  //     }
+  //     res.status(StatusCodes.OK).send(updatedPlant);
+  // });
+    try {
+    const plant = await Plant.findById(id)
+    console.log(plant)
+    console.log("log: ", log_entry)
+    plant.log_entries.push(log_entry)
+    const updated = await plant.save()
+    console.log(updated)
+    res.status(StatusCodes.OK).json(updated)
+      return
+  }
+    catch (err) {
+      console.log(err)
+      res.status(500).json({ err: "Uh oh. Something went wrong" });
+      return
+    }
 })
 
 //UPDATES ALL

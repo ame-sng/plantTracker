@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Row, Switch } from "antd";
-import { EditOutlined } from "@ant-design/icons";
+import { EditOutlined, CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import moment from "moment";
 import EditDateTransplanted from "../EditPlantDetails/11_EditDateTransplanted";
 import EditFirstSprout from "../EditPlantDetails/12_EditFirstSprout";
@@ -23,22 +23,22 @@ const Edible = ({ userStorage, plant, formChanged, setFormChanged }) => {
   const [lastHarvestVis, setLastHarvestVis] = useState(false);
   const [methodVis, setMethodVis] = useState(false);
 
-  // useEffect(() => {
-  //   try {
-  //     fetch(`/v1/plants/${plant._id}`, {
-  //       method: "PUT",
-  //       body: JSON.stringify({
-  //         edible: edibleSwitch,
-  //       }),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${userStorage.token}`,
-  //       },
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, [edibleSwitch]);
+  useEffect(() => {
+    try {
+      fetch(`/v1/plants/${plant._id}`, {
+        method: "PUT",
+        body: JSON.stringify({
+          edible: edibleSwitch,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userStorage.token}`,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [edibleSwitch]);
 
   const onChange = async (checked) => {
     console.log(`switch to ${checked}`);
@@ -50,10 +50,11 @@ const Edible = ({ userStorage, plant, formChanged, setFormChanged }) => {
     return (
       <div>
         <Row>
+          <Switch defaultChecked onChange={onChange} />
           <Title className="rubik" level={4}>
             Edible
           </Title>
-          <Switch defaultChecked onChange={onChange} />
+          <CheckCircleOutlined style={{ margin: "5px", fontSize: "17px" }}/>
           {/* <EditOutlined
           onClick={() => {
             setEdibleVis(true);
@@ -62,6 +63,7 @@ const Edible = ({ userStorage, plant, formChanged, setFormChanged }) => {
         /> */}
         </Row>
 
+        <Title className="rubik" level={2}>PLANT LIFECYCLE</Title>
         {/* ====================================================== */}
         <Row>
           {plant.method ? (
@@ -262,10 +264,13 @@ const Edible = ({ userStorage, plant, formChanged, setFormChanged }) => {
   if (plant.edible === "Non-edible" || plant.edible === undefined) {
     return (
       <div>
+        <Row>
+        <Switch onChange={onChange} />
         <Title className="rubik" level={4}>
           Non-edible
         </Title>
-        <Switch onChange={onChange} />
+        <CloseCircleOutlined style={{ margin: "5px", fontSize: "17px" }}/>
+        </Row>
       </div>
     );
   }
