@@ -11,6 +11,7 @@ const Signup = ({userDeets, setUserDeets, loggedIn, setLoggedIn}) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
+
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
     if (userInfo) {
@@ -18,7 +19,7 @@ const Signup = ({userDeets, setUserDeets, loggedIn, setLoggedIn}) => {
       console.log(user)
       history.push(`/dashboard/${user.username}`)
     }
-  }, [history])
+  }, [history, loggedIn])
 
 
   const onFinish = async (fieldsValue) => {
@@ -47,9 +48,11 @@ const Signup = ({userDeets, setUserDeets, loggedIn, setLoggedIn}) => {
         console.log(data)
         setUserDeets(data)
         setLoggedIn(true)
+        localStorage.setItem("loggedIn", true)
         localStorage.setItem("userInfo", JSON.stringify(data))
         setLoading(false);
         form.resetFields();
+        localStorage.setItem("loggedIn", loggedIn)
         return history.push(`/welcome}`)
 
       })

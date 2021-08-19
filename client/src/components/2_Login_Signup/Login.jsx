@@ -16,6 +16,8 @@ const Login = ({userDeets, setUserDeets, loggedIn, setLoggedIn}) => {
   const [errorMsg, setErrorMsg] = useState("")
   const [form] = Form.useForm();
 
+ 
+
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
     if (userInfo) {
@@ -23,7 +25,7 @@ const Login = ({userDeets, setUserDeets, loggedIn, setLoggedIn}) => {
       console.log(user)
       history.push(`/dashboard/${user.username}`)
     }
-  }, [history])
+  }, [history, loggedIn])
 
   const onFinish = async (fieldsValue) => {
     console.log(fieldsValue);
@@ -50,6 +52,7 @@ const Login = ({userDeets, setUserDeets, loggedIn, setLoggedIn}) => {
         console.log("data from login: ", data)
         setUserDeets(data)
         setLoggedIn(true)
+        localStorage.setItem("loggedIn", true)
         localStorage.setItem("userInfo", JSON.stringify(data))
         setLoading(false);
         setShowError(false);

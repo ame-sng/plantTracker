@@ -27,10 +27,16 @@ const { Title, Text, Paragraph } = Typography;
 
 const AllPlants = () => {
   const [deleted, setDeleted] = useState(true);
+  
+  useEffect(()=>{
+    const login = localStorage.getItem("loggedIn")
+  }, [])
+  
   const getUserInfo = () => {
     const userInfo = localStorage.getItem("userInfo");
     return JSON.parse(userInfo);
   };
+  
   const userStorage = getUserInfo();
   console.log("Display all plants userStorage: ", userStorage);
 

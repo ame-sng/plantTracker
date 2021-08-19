@@ -22,6 +22,15 @@ function App() {
     _id: ""
   });
   const [loggedIn, setLoggedIn] = useState(false)
+  
+  useEffect(()=>{
+    const login = localStorage.getItem("loggedIn")
+    setLoggedIn(login)
+  }, [userDeets])
+
+  useEffect(()=> {
+    localStorage.setItem("loggedIn", loggedIn)
+  }, [loggedIn])
 
   return (
     <QueryClientProvider client={queryClient}>

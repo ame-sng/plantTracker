@@ -9,18 +9,35 @@ const NavBar = ({userDeets, setUserDeets, loggedIn, setLoggedIn}) => {
   const history = useHistory();
   const [select, setSelect] = useState("")
   
-  // const getUserInfo = () => {
-  //   const userInfo = localStorage.getItem("userInfo");
-  //   return JSON.parse(userInfo);
-  // };
-  // const userStorage = getUserInfo();
-  // const username = userStorage.username
-  // console.log("userstorage navbar: ", userStorage)
+  useEffect(()=>{
+    const logged = localStorage.getItem("loggedIn")
+    setLoggedIn(logged)
+  }, [])
 
   const handleClick = (e) => {
     console.log("click", e);
     setSelect(e.key)
   }
+
+if(loggedIn === true){
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    setUserDeets(userInfo)}
+ 
+
+  const handleLogout = () => {
+    localStorage.removeItem("userInfo");
+    localStorage.removeItem("loggedIn");
+    setLoggedIn(false)
+    setUserDeets({
+      username:"",
+      email: "",
+      token: "",
+      plants: [],
+      _id: ""
+    })
+    history.push("/");
+  }
+
   return (
     <Menu
         onClick={handleClick}
@@ -37,15 +54,11 @@ const NavBar = ({userDeets, setUserDeets, loggedIn, setLoggedIn}) => {
           </Link>
         </Menu.Item>
           <Menu.Item key="Dashboard" icon={<SmileTwoTone />} >
-            <Link to ={`dashboard/${userDeets.username}`}>
+          <Link to ={`/dashboard/${userDeets.username}`}>
             <span className="knewave">My Babies</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="Logout" onClick = {() => {
-            localStorage.removeItem("userInfo");
-            setLoggedIn(false)
-            history.push("/");
-            }}>
+          <Menu.Item key="Logout" onClick = {handleLogout}>
               <Button type="primary" ghost>
             <span className="knewave" ><LogoutOutlined /> Logout</span>
               </Button>

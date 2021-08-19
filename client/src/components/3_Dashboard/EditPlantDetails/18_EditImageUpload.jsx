@@ -52,19 +52,6 @@ const EditImageUpload = ({
     };
   }
 
-  // const normFile = (e) => {
-  //   console.log("Upload event: ", e);
-  //   if (Array.isArray(e)) {
-  //     console.log("fileList: ", e)
-  //     return e;
-  //   }
-  //   if (e.fileList.length > 1) {
-  //     e.fileList.shift();
-  //   }
-  //   console.log("event: ", e)
-  //   console.log("fileList: ", e.fileList)
-  //   return e && e.fileList;
-  // };
 
   const dummyRequest = ({ file, onSuccess }) => {
     setTimeout(() => {
@@ -81,6 +68,7 @@ const EditImageUpload = ({
         centered
         onCancel={() => {
           setImageVisible(false);
+          form.resetFields();
         }}
         okText="Submit"
         onOk={handleSubmit}
