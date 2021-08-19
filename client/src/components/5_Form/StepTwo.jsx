@@ -14,14 +14,14 @@ const StepTwo = () => {
       <Form.Item label="Fertilise Frequency">
         <span> Every </span>
         <Form.Item name="fertilise_freq" noStyle>
-          <InputNumber min={1} placeholder="14" />
+          <InputNumber min={0} placeholder="14" />
         </Form.Item>
         <span> day(s)</span>
       </Form.Item>
       <Form.Item label="Progress Track Reminder">
         <span> Every </span>
         <Form.Item name="progressTrack_freq" noStyle>
-          <InputNumber min={1} placeholder="30" />
+          <InputNumber min={0} placeholder="30" />
         </Form.Item>
         <span> day(s)</span>
       </Form.Item>
