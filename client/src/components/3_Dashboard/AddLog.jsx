@@ -54,10 +54,11 @@ const AddLog = ({ userStorage, plant, formChanged, setFormChanged , visible, set
 
   return (
     <>
-      <Button type="primary" onClick={showDrawer}>
+      <Button size="large" className="fascinate" style={{backgroundColor: "#98D1FA", borderColor: "#98D1FA", marginBottom: 8}} type="primary" onClick={showDrawer} >
         <PlusOutlined /> Add Log
       </Button>
       <Drawer
+        className="knewave"
         title="Create a new log entry"
         placement="bottom"
         height="60%"
@@ -67,6 +68,7 @@ const AddLog = ({ userStorage, plant, formChanged, setFormChanged , visible, set
         bodyStyle={{ paddingBottom: 80 }}
       >
         <Form 
+        className="rubik"
         layout="vertical" 
         hideRequiredMark
         form={form}
@@ -98,10 +100,10 @@ const AddLog = ({ userStorage, plant, formChanged, setFormChanged , visible, set
               textAlign: "right",
             }}
           >
-            <Button onClick={onClose} style={{ marginRight: 8 }}>
+            <Button onClick={onClose} style={{ marginRight: 8, borderColor: "#98D1FA" }}>
               Cancel
             </Button>
-            <Button htmlType="submit" type="primary" >
+            <Button className="fascinate" style={{backgroundColor: "#98D1FA", borderColor: "#98D1FA"}} htmlType="submit" type="primary" >
             Submit
           </Button>
           </div>

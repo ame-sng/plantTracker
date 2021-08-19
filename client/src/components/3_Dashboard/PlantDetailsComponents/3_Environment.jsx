@@ -6,7 +6,7 @@ import EditGrowingMedium from "../EditPlantDetails/8_EditGrowingMedium";
 import EditPotSize from "../EditPlantDetails/9_EditPotSize";
 import EditPotDrain from "../EditPlantDetails/10_EditPotDrain";
 
-const { Title } = Typography;
+const { Title, Paragraph } = Typography;
 
 const Environment = ({ 
   userStorage,
@@ -48,20 +48,34 @@ const Environment = ({
 {/* ====================================================== */}
       <Row>
         {plant.growing_medium ? (
+          <>
           <Title className="rubik" level={4}>
-            Growing Medium: {plant.growing_medium}
+            Growing Medium: 
           </Title>
-        ) : (
-          <Title className="rubik" level={4}>
-            Growing Medium not provided
-          </Title>
-        )}
-        <EditOutlined
+          <EditOutlined
           onClick={() => {
             setGrowVisible(true);
           }}
           style={{ margin: "5px" }}
         />
+          <Paragraph style={{fontSize: 18}}>
+          {plant.growing_medium}
+          </Paragraph>
+          </>
+        ) : (
+          <>
+          <Title className="rubik" level={4}>
+            Growing Medium not provided
+          </Title>
+          <EditOutlined
+          onClick={() => {
+            setGrowVisible(true);
+          }}
+          style={{ margin: "5px" }}
+        />
+          </>
+        )}
+        
         <EditGrowingMedium 
         userStorage={userStorage}
         plant={plant}

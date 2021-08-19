@@ -27,6 +27,7 @@ const { Title, Text, Paragraph } = Typography;
 
 const AllPlants = () => {
   const [deleted, setDeleted] = useState(true);
+  const [reminders, setReminders] = useState([])
   
   useEffect(()=>{
     const login = localStorage.getItem("loggedIn")
@@ -119,23 +120,24 @@ const AllPlants = () => {
       <div>
         <Title className="knewave" level={2}>
           Welcome back, {user.username}
-        </Title>{" "}
-        {/* //!CHANGE TO CONTEXT DATA */}
+        </Title>
       </div>
       <Link to="/addplant">
-        <Button>Add Plant</Button>
+        <Button type="primary" size="large">Add Plant Baby</Button>
       </Link>
       <Divider />
-      <Tabs type="card">
+      <Tabs type="card" className="rubik">
         <TabPane tab="Indoor" key="1">
           <h1>Indoor</h1>
           <Row gutter={[16, 16]}>
             {indoorPlants?.map((inPlant, index) => (
               <Col xs={24} sm={12} md={8} lg={6} xl={4}>
                 <Card
-                  style={{ width: 200, height: 250 }}
+                className="fascinate"
+                  style={{ height: 250, width: 200, borderColor: "#98D1FA"}}
+                  headStyle={{height: 20, backgroundColor: "#98D1FA", letterSpacing: "0.05em"}}
                   title={
-                    <Link to={`/dashboard/${username}/${inPlant.name}`}>
+                    <Link className="fascinate" to={`/dashboard/${username}/${inPlant.name}`}>
                       {inPlant.name}
                     </Link>
                   }
@@ -147,8 +149,8 @@ const AllPlants = () => {
                         src={
                           inPlant.image_upload[inPlant.image_upload.length - 1]
                         }
-                        style={{objectFit: "cover"}}
-                      />
+                        style={{objectFit: "cover", height: 201, width: 200}}
+                        />
                     </Link>
                   }
                   extra={
@@ -163,9 +165,7 @@ const AllPlants = () => {
                   }
                   key={index}
                 >
-                  {/* <Meta
-                title={inPlant.name}
-              /> */}
+              
                 </Card>
               </Col>
             ))}
@@ -177,9 +177,11 @@ const AllPlants = () => {
             {outdoorPlants?.map((outPlant, index) => (
               <Col xs={24} sm={12} md={8} lg={6} xl={4}>
                 <Card
-                  style={{ width: 200 }}
+                  className="fascinate"
+                  style={{ height: 250, width: 200 }}
+                  headStyle={{height: 20, backgroundColor: "#98D1FA"}}
                   title={
-                    <Link to={`/dashboard/${username}/${outPlant.name}`}>
+                    <Link className="fascinate" to={`/dashboard/${username}/${outPlant.name}`}>
                       {outPlant.name}
                     </Link>
                   }
@@ -193,6 +195,7 @@ const AllPlants = () => {
                             outPlant.image_upload.length - 1
                           ]
                         }
+                        style={{objectFit: "cover", height: 201, width: 200}}
                       />
                     </Link>
                   }
@@ -212,15 +215,17 @@ const AllPlants = () => {
             ))}
           </Row>
         </TabPane>
-        <TabPane tab="Others" key="3">
+        <TabPane tab="Other" key="3">
           <h1>Other</h1>
           <Row gutter={[16, 16]}>
             {nolocPlants?.map((nolocPlant, index) => (
               <Col xs={24} sm={12} md={8} lg={6} xl={4}>
                 <Card
-                  style={{ width: 200, height: 250 }}
+                  className="fascinate"
+                  style={{ height: 250, width: 200 }}
+                  headStyle={{height: 20, backgroundColor: "#98D1FA"}}
                   title={
-                    <Link to={`/dashboard/${username}/${nolocPlant.name}`}>
+                    <Link className="fascinate" to={`/dashboard/${username}/${nolocPlant.name}`}>
                       {nolocPlant.name}
                     </Link>
                   }
@@ -234,6 +239,7 @@ const AllPlants = () => {
                             nolocPlant.image_upload.length - 1
                           ]
                         }
+                        style={{objectFit: "cover", height: 201, width: 200}}
                       />
                     </Link>
                   }

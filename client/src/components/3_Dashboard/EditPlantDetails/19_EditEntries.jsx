@@ -76,6 +76,7 @@ const userStorage = getUserInfo();
   return (
     <div>
         <Form
+        className="rubik"
           form={form}
           layout="vertical"
           name="form_in_modal"
@@ -105,7 +106,7 @@ const userStorage = getUserInfo();
           >
             <TextArea rows={5} placeholder={wantedLog[0].body_text}/>
           </Form.Item>
-          <Button htmlType="submit" type="primary" >
+          <Button className="fascinate" style={{backgroundColor: "#98D1FA", borderColor: "#98D1FA", marginRight: "5px"}} htmlType="submit" type="primary" >
             Submit
           </Button>
         <Button htmlType="button" onClick={handleReturn}>

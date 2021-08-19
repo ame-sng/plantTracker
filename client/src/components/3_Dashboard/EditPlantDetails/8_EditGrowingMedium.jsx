@@ -1,6 +1,8 @@
 import React from 'react'
 import { Modal, Input, Form } from "antd";
 
+const { TextArea } = Input;
+
 const EditGrowingMedium = ({
   userStorage,
   plant,
@@ -54,7 +56,7 @@ const EditGrowingMedium = ({
           }}
         >
           <Form.Item name="growing_medium">
-            <Input placeholder={plant.growing_medium} />
+            <TextArea rows={3} placeholder={plant.growing_medium} />
           </Form.Item>
         </Form>
       </Modal>

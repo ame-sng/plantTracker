@@ -7,8 +7,9 @@ import {
   Button,
   DatePicker,
   notification,
+  Divider
 } from "antd";
-import { SmileOutlined, EditOutlined } from "@ant-design/icons";
+import { SmileOutlined, EditOutlined, UndoOutlined } from "@ant-design/icons";
 import moment from "moment";
 import EditWaterFreq from "../EditPlantDetails/4_EditWaterFreq";
 import EditFertFreq from "../EditPlantDetails/5_EditFertFreq";
@@ -83,35 +84,68 @@ const CareCountdown = ({
   return (
     <div>
       {plant.water_freq ? (
-        <Row>
-          <Row>
-            <Title className="rubik" level={4}>
-              Water every {plant.water_freq} days
-            </Title>
-            <EditOutlined
-              onClick={() => {
-                setWaterVis(true);
+          <Row 
+          style={{
+            padding: 5,
+            marginRight: 5,
+            marginBottom: 8
+          }}>
+            <Col
+              xs={24}
+              sm={12}
+              md={12}
+              lg={7}
+              xl={7}
+              style={{
+                padding: 5,
+                marginRight: 5,
               }}
-              style={{ fontSize: "18px", margin: "5px" }}
-            />
-            <EditWaterFreq
-              userStorage={userStorage}
-              plant={plant}
-              formChanged={formChanged}
-              setFormChanged={setFormChanged}
-              waterVis={waterVis}
-              setWaterVis={setWaterVis}
-              setWaterDeadline={setWaterDeadline}
-            />
-          </Row>
-
-          <Row>
-            <Col span={12}>
-              <Title className="rubik" level={4}>
-                Water {plant.name} in
-              </Title>
+            >
+              <Row>
+                <Title
+                  className="rubik"
+                  level={5}
+                  style={{ textAlign: "center" }}
+                >
+                  💧 Water every
+                  <span style={{ color: "#3cacfc", margin: "0 4px" }}>
+                    {plant.water_freq}
+                  </span>
+                  days
+                </Title>
+                <EditOutlined
+                  onClick={() => {
+                    setWaterVis(true);
+                  }}
+                  style={{ fontSize: "18px", margin: "5px" }}
+                />
+                <EditWaterFreq
+                  userStorage={userStorage}
+                  plant={plant}
+                  formChanged={formChanged}
+                  setFormChanged={setFormChanged}
+                  waterVis={waterVis}
+                  setWaterVis={setWaterVis}
+                  setWaterDeadline={setWaterDeadline}
+                />
+              </Row>
             </Col>
-            <Col span={12}>
+
+            <Col
+              xs={24}
+              sm={12}
+              md={12}
+              lg={7}
+              xl={8}
+              style={{
+                padding: 5,
+                marginRight: 5,
+              }}
+            >
+              <Title className="rubik" level={5}>
+                Water in:
+              </Title>
+
               <Countdown
                 valueStyle={{
                   fontSize: "16px",
@@ -122,22 +156,38 @@ const CareCountdown = ({
                 format="D [Days] H [hours] m [min] s [sec]"
               />
             </Col>
-          </Row>
-          <Row>
-            <Button
-              onClick={() => {
-                setWaterDeadline(
-                  Date.now() + 1000 * 1 * 1 * 1 * plant.water_freq
-                );
+            <Col
+              xs={24}
+              sm={12}
+              md={12}
+              lg={7}
+              xl={8}
+              style={{
+                padding: 5,
+                marginRight: 5,
               }}
             >
-              Reset Water Countdown
-            </Button>
+              <Button
+                type="primary"
+                onClick={() => {
+                  setWaterDeadline(
+                    Date.now() + 1000 * 1 * 1 * 1 * plant.water_freq
+                  );
+                }}
+              >
+                <UndoOutlined style={{color: "#fff"}}/> Reset Timer
+              </Button>
+            </Col>
           </Row>
-        </Row>
+
       ) : (
         //*======IF WATER INFO NOT PROVIDED=======//
-        <Row>
+        <Row
+        style={{
+          padding: 5,
+          paddingTop: 10,
+          marginBottom: 8,
+        }}>
           <Title className="rubik" level={4}>
             Water Frequency not provided
           </Title>
@@ -145,7 +195,7 @@ const CareCountdown = ({
             onClick={() => {
               setWaterVis(true);
             }}
-            style={{ fontSize: "18px", margin: "5px" }}
+            style={{ fontSize: "14px", margin: "5px" }}
           />
           <EditWaterFreq
             userStorage={userStorage}
@@ -158,18 +208,39 @@ const CareCountdown = ({
           />
         </Row>
       )}
-
+      <Divider />
       {plant.fertilise_freq ? (
-        <Row>
+        <Row
+        style={{
+          padding: 5,
+          marginBottom: 8
+        }}>
+         <Col
+              xs={24}
+              sm={12}
+              md={12}
+              lg={7}
+              xl={7}
+              style={{
+                padding: 5,
+                marginRight: 5,
+              }}>
           <Row>
-            <Title className="rubik" level={4}>
-              Fertilise every {plant.fertilise_freq} days
+            <Title 
+            className="rubik"
+            level={5}
+            style={{ textAlign: "center" }}>
+              🪴 Fertilise every  
+              <span style={{ color: "#3cacfc", margin: "0 4px" }}>
+                {plant.fertilise_freq}
+                </span> 
+                days
             </Title>
             <EditOutlined
               onClick={() => {
                 setFertVis(true);
               }}
-              style={{ fontSize: "18px", margin: "5px" }}
+              style={{ fontSize: "14px", margin: "5px" }}
             />
             <EditFertFreq
               userStorage={userStorage}
@@ -181,13 +252,22 @@ const CareCountdown = ({
               setFertDeadline={setFertDeadline}
             />
           </Row>
-          <Row>
-            <Col span={12}>
-              <Title className="rubik" level={4}>
-                Fertilise {plant.name} in
+          </Col>
+
+            <Col  
+            xs={24}
+            sm={12}
+            md={12}
+            lg={7}
+            xl={8}
+            style={{
+              padding: 5,
+              marginRight: 5,
+              }}>
+              <Title className="rubik" level={5}>
+                Fertilise in
               </Title>
-            </Col>
-            <Col span={12}>
+          
               <Countdown
                 valueStyle={{
                   fontSize: "16px",
@@ -198,20 +278,39 @@ const CareCountdown = ({
                 format="D [Days] H [hours] m [min] s [sec]"
               />
             </Col>
+            <Col
+             xs={24}
+             sm={12}
+             md={12}
+             lg={7}
+             xl={8}
+             style={{
+               padding: 5,
+               marginRight: 5,
+             }}
+            >
             <Button
+            type="primary"
               onClick={() => {
                 setFertDeadline(
                   Date.now() + 1000 * 1 * 1 * 1 * plant.fertilise_freq
                 );
               }}
             >
-              Reset Fertilise Countdown
+              <UndoOutlined style={{color: "#fff"}}/> Reset Timer
             </Button>
+            </Col>
           </Row>
-        </Row>
+
       ) : (
-         //*======IF FERT INFO NOT PROVIDED=======//
-        <Row>
+        //*======IF FERT INFO NOT PROVIDED=======//
+        <Row
+        style={{
+          padding: 5,
+          paddingTop: 10,
+          marginBottom: 8,
+        }}
+        >
           <Title className="rubik" level={4}>
             Fertilise Frequency not provided
           </Title>
@@ -219,7 +318,7 @@ const CareCountdown = ({
             onClick={() => {
               setFertVis(true);
             }}
-            style={{ fontSize: "18px", margin: "5px" }}
+            style={{ fontSize: "14px", margin: "5px" }}
           />
           <EditFertFreq
             userStorage={userStorage}
@@ -233,17 +332,38 @@ const CareCountdown = ({
         </Row>
       )}
 
+<Divider />
       {plant.progressTrack_freq ? (
-        <Row>
-          <Col span={12}>
-            <Title className="rubik" level={4}>
-              Take a progress picture of {plant.name} in
+        <Row
+        style={{
+          padding: 5,
+          marginRight: 5,
+          marginBottom: 8
+        }}
+        >
+          <Col 
+          xs={24}
+          sm={12}
+          md={12}
+          lg={7}
+          xl={7}
+          style={{
+            padding: 5,
+            marginRight: 5,
+          }}>
+            <Row>
+            <Title className="rubik" level={5}>
+              🤳 Take a progress picture every
+              <span style={{ color: "#3cacfc", margin: "0 4px" }}>
+                {plant.progressTrack_freq}
+              </span>
+              days
             </Title>
             <EditOutlined
               onClick={() => {
                 setProgVis(true);
               }}
-              style={{ fontSize: "18px", margin: "5px" }}
+              style={{ fontSize: "14px", margin: "5px" }}
             />
             <EditProgressFreq
               userStorage={userStorage}
@@ -254,27 +374,81 @@ const CareCountdown = ({
               setProgVis={setProgVis}
               setProgressDeadline={setProgressDeadline}
             />
+            </Row>
           </Col>
-          <Countdown
-            valueStyle={{ fontSize: "16px", fontFamily: "'Rubik', sans-serif" }}
-            value={progressDeadline}
-            onFinish={pictured}
-            format="D [Days] H [hours] m [min] s [sec]"
-          />
+          <Col
+              xs={24}
+              sm={12}
+              md={12}
+              lg={7}
+              xl={8}
+              style={{
+                padding: 5,
+                marginRight: 5,
+              }}
+            >
+               <Title className="rubik" level={5}>
+                Take photo in:
+              </Title>
+              <Countdown
+                valueStyle={{ fontSize: "16px", fontFamily: "'Rubik', sans-serif" }}
+                value={progressDeadline}
+                onFinish={pictured}
+                format="D [Days] H [hours] m [min] s [sec]"
+              />
+            </Col>
+            <Col
+              xs={24}
+              sm={12}
+              md={12}
+              lg={7}
+              xl={8}
+              style={{
+                padding: 5,
+                marginRight: 5,
+
+              }}
+            >
           <Button
+          type="primary"
             onClick={() => {
               setProgressDeadline(
                 Date.now() + 1000 * 1 * 1 * 1 * plant.progressTrack_freq
               );
             }}
           >
-            Reset Fertilise Countdown
+            <UndoOutlined style={{color: "#fff"}}/> Reset Timer
           </Button>
+          </Col>
         </Row>
       ) : (
+        <Row
+        style={{
+          border: "1px solid",
+          borderRadius: 10,
+          padding: 5,
+          paddingTop: 10,
+          marginBottom: 8,
+        }}>
         <Title className="rubik" level={4}>
           Progress Track Frequency not provided
         </Title>
+        <EditOutlined
+              onClick={() => {
+                setProgVis(true);
+              }}
+              style={{ fontSize: "14px", margin: "5px" }}
+            />
+            <EditProgressFreq
+              userStorage={userStorage}
+              plant={plant}
+              formChanged={formChanged}
+              setFormChanged={setFormChanged}
+              progVis={progVis}
+              setProgVis={setProgVis}
+              setProgressDeadline={setProgressDeadline}
+            />
+      </Row>
       )}
     </div>
   );

@@ -52,9 +52,8 @@ const Entries = ({
   };
   return (
     <div>
-      <Card title="Plant Entries">
-        <Row gutter={[16, 8]}>
-          <Row>
+      <Card title="Plant Entries" className="knewave" style={{borderColor: "#eaf2f7"}} 
+      headStyle={{fontFamily: "fascinate", fontSize: 35, color: "#f99f81", textShadow: "1px 2px 3px #FDE84D"}}>
             <AddLog
               userStorage={userStorage}
               plant={plant}
@@ -63,16 +62,18 @@ const Entries = ({
               visible={visible}
               setVisible={setVisible}
             />
-          </Row>
-          <Row gutter={[16, 8]}>
+        <Row gutter={[16, 8]}>
             {plant.log_entries
               .map((entry, index) => (
                 <>
-                  <Col span={12}>
+                <Col xs={24} sm={24} md={24} lg={12} xl={8}>
                     <Card
                       key={index}
+                      headStyle={{fontFamily: "knewave", backgroundColor: "#eaf2f7", color:"#0c6aad", borderColor: "#fff"}}
                       className="rubik"
+                      style={{backgroundColor: "#eaf2f7" }} //
                       title={entry.headline}
+                      
                       actions={[
                         <Link
                           to={{
@@ -95,11 +96,10 @@ const Entries = ({
                     >
                       <Text className="rubik">{entry.body_text}</Text>
                     </Card>
-                  </Col>
+                </Col>
                 </>
               ))
               .reverse()}
-          </Row>
         </Row>
       </Card>
     </div>
