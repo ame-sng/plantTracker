@@ -53,7 +53,7 @@ const Signup = ({userDeets, setUserDeets, loggedIn, setLoggedIn}) => {
         setLoading(false);
         form.resetFields();
         localStorage.setItem("loggedIn", loggedIn)
-        return history.push(`/welcome}`)
+        return history.push("/welcome")
 
       })
     .catch ((error) => {

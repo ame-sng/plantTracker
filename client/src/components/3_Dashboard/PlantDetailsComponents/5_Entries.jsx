@@ -69,7 +69,7 @@ const Entries = ({
                 <Col xs={24} sm={24} md={24} lg={12} xl={8}>
                     <Card
                       key={index}
-                      headStyle={{fontFamily: "knewave", backgroundColor: "#eaf2f7", color:"#0c6aad", borderColor: "#fff"}}
+                      headStyle={{fontFamily: "knewave", backgroundColor: "#eaf2f7", borderColor: "#fff"}}
                       className="rubik"
                       style={{backgroundColor: "#eaf2f7" }} //
                       title={entry.headline}

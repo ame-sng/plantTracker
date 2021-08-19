@@ -40,7 +40,7 @@ const AddLog = ({ userStorage, plant, formChanged, setFormChanged , visible, set
       .then((res)=>{
         
           console.log("res: ",res)
-          // form.resetFields();
+          form.resetFields();
           setFormChanged(!formChanged);
           onClose();
         
@@ -54,7 +54,7 @@ const AddLog = ({ userStorage, plant, formChanged, setFormChanged , visible, set
 
   return (
     <>
-      <Button size="large" className="fascinate" style={{backgroundColor: "#98D1FA", borderColor: "#98D1FA", marginBottom: 8}} type="primary" onClick={showDrawer} >
+      <Button size="large" className="fascinate" style={{backgroundColor: "#98D1FA", borderColor: "#98D1FA", marginBottom: 25}} type="primary" onClick={showDrawer} >
         <PlusOutlined /> Add Log
       </Button>
       <Drawer

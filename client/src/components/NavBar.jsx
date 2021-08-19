@@ -59,7 +59,7 @@ if(loggedIn === true){
             </Link>
           </Menu.Item>
           <Menu.Item key="Logout" onClick = {handleLogout}>
-              <Button type="primary" ghost>
+              <Button type="primary" ghost style={{color:"#edf7ff"}}>
             <span className="knewave" ><LogoutOutlined /> Logout</span>
               </Button>
           </Menu.Item>

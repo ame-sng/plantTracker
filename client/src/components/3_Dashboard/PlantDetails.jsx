@@ -163,18 +163,20 @@ const PlantDetails = () => {
               <Image
                 height={300}
                 src={plant.image_upload[plant.image_upload.length - 1]}
-              />
+                />
+                </Row>
+                <Row justify= "center">
                 <Button
                   className="fascinate"
                   type="primary"
-                  style={{marginTop: 8}}
+                  style={{margin: 8}}
                   onClick={() => {
                     setImageVisible(true);
                   }}
                 >
                   <PlusOutlined /> Add New Image
                 </Button>
-              </Row>
+                </Row>
               <Row justify= "center" style={{ marginTop:8}}>
               <Title level={4}>{plant.name}'s progress:</Title>
               </Row>

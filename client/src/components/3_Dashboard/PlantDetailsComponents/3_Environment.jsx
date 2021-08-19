@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Row } from "antd";
+import { Typography, Row, Col, Divider } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import EditSunlight from "../EditPlantDetails/7_EditSunlight";
 import EditGrowingMedium from "../EditPlantDetails/8_EditGrowingMedium";
@@ -20,13 +20,21 @@ const Environment = ({
 
   return (
     <div>
-      <Row>
+      <Row
+       style={{
+        padding: 5,
+        marginRight: 5,
+        marginBottom: 8
+      }}
+      >
+        <Col>
+        </Col>
         {plant.sunlight ? (
-          <Title className="rubik" level={4}>
-            Sunlight: {plant.sunlight}
+          <Title className="rubik" level={5}>
+            ☀️ Sunlight: {plant.sunlight}
           </Title>
         ) : (
-          <Title className="rubik" level={4}>
+          <Title className="rubik" level={5}>
             Sunlight not provided
           </Title>
         )}
@@ -46,10 +54,16 @@ const Environment = ({
         />
       </Row>
 {/* ====================================================== */}
-      <Row>
+      <Row
+       style={{
+        padding: 5,
+        marginRight: 5,
+        marginBottom: 8
+      }}
+      >
         {plant.growing_medium ? (
           <>
-          <Title className="rubik" level={4}>
+          <Title className="rubik" level={5}>
             Growing Medium: 
           </Title>
           <EditOutlined
@@ -58,13 +72,13 @@ const Environment = ({
           }}
           style={{ margin: "5px" }}
         />
-          <Paragraph style={{fontSize: 18}}>
+          <Paragraph style={{fontSize: 15}}>
           {plant.growing_medium}
           </Paragraph>
           </>
         ) : (
           <>
-          <Title className="rubik" level={4}>
+          <Title className="rubik" level={5}>
             Growing Medium not provided
           </Title>
           <EditOutlined
@@ -86,13 +100,19 @@ const Environment = ({
         />
       </Row>
 {/* ====================================================== */}
-      <Row>
+      <Row
+       style={{
+        padding: 5,
+        marginRight: 5,
+        marginBottom: 8
+      }}
+      >
         {plant.pot_size ? (
-          <Title className="rubik" level={4}>
+          <Title className="rubik" level={5}>
             Pot Size: {plant.pot_size}in
           </Title>
         ) : (
-          <Title className="rubik" level={4}>
+          <Title className="rubik" level={5}>
             Pot Size not provided
           </Title>
         )}
@@ -112,13 +132,19 @@ const Environment = ({
         />
       </Row>
 {/* ====================================================== */}
-      <Row>
+      <Row
+       style={{
+        padding: 5,
+        marginRight: 5,
+        marginBottom: 8
+      }}
+      >
         {plant.pot_drain ? (
-          <Title className="rubik" level={4}>
+          <Title className="rubik" level={5}>
             Pot Drainage: {plant.pot_drain ? "Yes" : "No"}
           </Title>
         ) : (
-          <Title className="rubik" level={4}>
+          <Title className="rubik" level={5}>
             Pot Drainage not provided
           </Title>
         )}

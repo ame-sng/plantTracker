@@ -49,7 +49,11 @@ const Edible = ({ userStorage, plant, formChanged, setFormChanged }) => {
   if (plant.edible === "Edible") {
     return (
       <div>
-        <Row>
+        <Row style={{
+        padding: 5,
+        marginRight: 5,
+        marginBottom: 8
+      }}>
           <Switch defaultChecked onChange={onChange} />
           <Title className="rubik" level={4}>
             Edible
@@ -63,15 +67,15 @@ const Edible = ({ userStorage, plant, formChanged, setFormChanged }) => {
         /> */}
         </Row>
 
-        <Title className="rubik" level={2}>PLANT LIFECYCLE</Title>
+        <Title className="knewave" level={3} style={{padding: 5}}>LIFECYCLE DATES</Title>
         {/* ====================================================== */}
-        <Row>
+        <Row style={{padding: 5}}>
           {plant.method ? (
-            <Title className="rubik" level={4}>
+            <Title className="rubik" level={5}>
               Method of Propagation: {plant.method}
             </Title>
           ) : (
-            <Title className="rubik" level={4}>
+            <Title className="rubik" level={5}>
               Method of Propagation not provided
             </Title>
           )}
@@ -93,14 +97,14 @@ const Edible = ({ userStorage, plant, formChanged, setFormChanged }) => {
 
         {/* ====================================================== */}
 
-        <Row>
+        <Row style={{padding: 5}}>
           {plant.date_transplanted ? (
-            <Title className="rubik" level={4}>
+            <Title className="rubik" level={5}>
               Date Transplanted:{" "}
               {moment(plant.date_transplanted).format("Do MMMM YYYY")}
             </Title>
           ) : (
-            <Title className="rubik" level={4}>
+            <Title className="rubik" level={5}>
               Date Transplanted not provided
             </Title>
           )}
@@ -121,13 +125,13 @@ const Edible = ({ userStorage, plant, formChanged, setFormChanged }) => {
         </Row>
         {/* ====================================================== */}
 
-        <Row>
+        <Row style={{padding: 5}}>
           {plant.first_sprout ? (
-            <Title className="rubik" level={4}>
+            <Title className="rubik" level={5}>
               First Sprout: {moment(plant.first_sprout).format("Do MMMM YYYY")}
             </Title>
           ) : (
-            <Title className="rubik" level={4}>
+            <Title className="rubik" level={5}>
               Date of First Sprout not provided
             </Title>
           )}
@@ -149,13 +153,13 @@ const Edible = ({ userStorage, plant, formChanged, setFormChanged }) => {
 
         {/* ====================================================== */}
 
-        <Row>
+        <Row style={{padding: 5}}>
           {plant.first_flower ? (
-            <Title className="rubik" level={4}>
+            <Title className="rubik" level={5}>
               First Flower: {moment(plant.first_flower).format("Do MMMM YYYY")}
             </Title>
           ) : (
-            <Title className="rubik" level={4}>
+            <Title className="rubik" level={5}>
               Date of First Flower not provided
             </Title>
           )}
@@ -176,13 +180,13 @@ const Edible = ({ userStorage, plant, formChanged, setFormChanged }) => {
         </Row>
 
         {/* ====================================================== */}
-        <Row>
+        <Row style={{padding: 5}}>
           {plant.first_fruit ? (
-            <Title className="rubik" level={4}>
+            <Title className="rubik" level={5}>
               First Fruit: {moment(plant.first_fruit).format("Do MMMM YYYY")}
             </Title>
           ) : (
-            <Title className="rubik" level={4}>
+            <Title className="rubik" level={5}>
               Date of First Fruit not provided
             </Title>
           )}
@@ -204,15 +208,14 @@ const Edible = ({ userStorage, plant, formChanged, setFormChanged }) => {
 
         {/* ====================================================== */}
 
+        <Row style={{padding: 5}}>
         {plant.first_harvest ? (
-        <Row>
-        <Title className="rubik" level={4}>
+        <Title className="rubik" level={5}>
           First Harvest: {moment(plant.first_harvest).format("Do MMMM YYYY")}
         </Title>
-        </Row>
         )
         :
-        (<Title className="rubik" level={4}>
+        (<Title className="rubik" level={5}>
             Date of First Harvest not provided
           </Title>)
         } 
@@ -221,7 +224,7 @@ const Edible = ({ userStorage, plant, formChanged, setFormChanged }) => {
               setFirstHarvestVis(true);
             }}
             style={{ margin: "5px" }}
-          />
+            />
           <EditFirstHarvest
             userStorage={userStorage}
             plant={plant}
@@ -229,17 +232,18 @@ const Edible = ({ userStorage, plant, formChanged, setFormChanged }) => {
             setFirstHarvestVis={setFirstHarvestVis}
             formChanged={formChanged}
             setFormChanged={setFormChanged}
-          />
+            />
+        </Row>
 
         {/* ====================================================== */}
 
-        <Row>
+        <Row style={{padding: 5}}>
           {plant.last_harvest ? (
-        <Title className="rubik" level={4}>
+        <Title className="rubik" level={5}>
           Last Harvest: {moment(plant.last_harvest).format("Do MMMM YYYY")}
         </Title>)
           :
-          (<Title className="rubik" level={4}>
+          (<Title className="rubik" level={5}>
             Date of Last Harvest not provided
           </Title>)
         }
@@ -265,7 +269,7 @@ const Edible = ({ userStorage, plant, formChanged, setFormChanged }) => {
   if (plant.edible === "Non-edible" || plant.edible === undefined) {
     return (
       <div>
-        <Row>
+        <Row style={{padding: 5}}>
         <Switch onChange={onChange} />
         <Title className="rubik" level={4}>
           Non-edible
